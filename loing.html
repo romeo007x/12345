@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบบริหารจัดการเว็บไซต์ - โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans Thai', sans-serif;
+            background-color: #f8fafc;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .page-view { display: none; }
+        .page-view.active { display: block; }
+        /* สไตล์พิเศษเมื่อแอดมินเปิดโหมดแก้ไขแบบอินไลน์ */
+        .admin-editable:hover {
+            outline: 2px dashed #3b82f6;
+            outline-offset: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden min-h-screen flex flex-col">
+
+    <div id="admin-top-bar" class="bg-gradient-to-r from-slate-900 to-blue-900 text-white px-4 py-2 text-xs md:text-sm font-medium hidden justify-between items-center sticky top-0 z-50 shadow-md">
+        <div class="flex items-center space-x-2">
+            <span class="flex h-2 w-2 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span>โหมดผู้ดูแลระบบ (Admin Mode Active)</span>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button onclick="navigateTo('admin-dashboard')" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white font-semibold transition">
+                <i class="fas fa-tachometer-alt mr-1"></i> แดชบอร์ด
+            </button>
+            <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white font-semibold transition">
+                <i class="fas fa-sign-out-alt mr-1"></i> ออกจากระบบ
+            </button>
+        </div>
+    </div>
+
+    <header class="bg-white shadow-sm sticky top-0 z-40" id="main-header">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center h-16 md:h-20">
+            <a href="javascript:void(0)" onclick="navigateTo('home')" class="flex items-center space-x-2 md:space-x-3">
+                <img src="https://img2.pic.in.th/logo_lomkao2-no-BG.png" alt="โลโก้" class="h-10 w-10 md:h-12 md:w-12 object-contain flex-shrink-0">
+                <div>
+                    <h1 class="text-[#1e3a8a] font-bold text-xs sm:text-sm md:text-base leading-tight" id="txt-site-title">โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า</h1>
+                    <p class="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider mt-0.5">LOMKAO CROWN PRINCE HOSPITAL</p>
+                </div>
+            </a>
+
+            <nav class="hidden lg:flex items-center space-x-1 xl:space-x-2 text-sm font-medium text-gray-700 h-full">
+                <a href="javascript:void(0)" onclick="navigateTo('home')" class="nav-link px-3 py-2 text-[#1e3a8a] font-semibold border-b-2 border-[#1e3a8a]" data-page="home">หน้าแรก</a>
+                
+                <div class="relative group h-full flex items-center">
+                    <button class="nav-link px-3 py-2 hover:text-[#1e3a8a] transition flex items-center gap-1 cursor-pointer" data-page="about">
+                        เกี่ยวกับเรา <i class="fas fa-chevron-down text-[10px] mt-0.5 transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute top-full left-0 bg-white shadow-lg rounded-b-lg overflow-hidden hidden group-hover:block min-w-[220px] border-t-2 border-[#1e3a8a]">
+                        <a href="javascript:void(0)" onclick="navigateTo('about', 'history')" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">ประวัติความเป็นมา</a>
+                        <a href="javascript:void(0)" onclick="navigateTo('about', 'vision')" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">วิสัยทัศน์ และ พันธกิจ</a>
+                        <a href="javascript:void(0)" onclick="navigateTo('about', 'executives')" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a]">โครงสร้างผู้บริหาร</a>
+                    </div>
+                </div>
+
+                <div class="relative group h-full flex items-center">
+                    <button class="nav-link px-3 py-2 hover:text-[#1e3a8a] transition flex items-center gap-1 cursor-pointer" data-page="services">
+                        บริการ <i class="fas fa-chevron-down text-[10px] mt-0.5 transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute top-full left-0 bg-white shadow-lg rounded-b-lg overflow-hidden hidden group-hover:block min-w-[200px] border-t-2 border-[#1e3a8a]">
+                        <a href="javascript:void(0)" onclick="navigateTo('services', 'schedule')" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">ตารางออกตรวจแพทย์</a>
+                        <a href="javascript:void(0)" onclick="navigateTo('services', 'clinics')" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a]">คลินิกเฉพาะทาง</a>
+                    </div>
+                </div>
+
+                <div class="relative group h-full flex items-center">
+                    <button class="nav-link px-3 py-2 hover:text-[#1e3a8a] transition flex items-center gap-1 cursor-pointer" data-page="patient-info">
+                        สำหรับผู้รับบริการ <i class="fas fa-chevron-down text-[10px] mt-0.5 transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute top-full left-0 bg-white shadow-lg rounded-b-lg overflow-hidden hidden group-hover:block min-w-[220px] border-t-2 border-[#1e3a8a]">
+                        <a href="javascript:void(0)" onclick="navigateTo('patient-info', 'rights')" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">ตรวจสอบสิทธิการรักษา</a>
+                        <a href="javascript:void(0)" onclick="navigateTo('patient-info', 'steps')" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">ขั้นตอนการรับบริการ</a>
+                        <a href="javascript:void(0)" onclick="navigateTo('patient-info', 'appointment')" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a]">นัดหมายออนไลน์</a>
+                    </div>
+                </div>
+
+                <div class="relative group h-full flex items-center">
+                    <button class="nav-link px-3 py-2 hover:text-[#1e3a8a] transition flex items-center gap-1 cursor-pointer" data-page="news">
+                        ข่าวสาร <i class="fas fa-chevron-down text-[10px] mt-0.5 transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute top-full left-0 bg-white shadow-lg rounded-b-lg overflow-hidden hidden group-hover:block min-w-[200px] border-t-2 border-[#1e3a8a]">
+                        <a href="javascript:void(0)" onclick="navigateTo('news', 'pr')" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">ข่าวประชาสัมพันธ์</a>
+                        <a href="javascript:void(0)" onclick="navigateTo('news', 'procurement')" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a]">ประกาศจัดซื้อจัดจ้าง</a>
+                    </div>
+                </div>
+
+                <a href="javascript:void(0)" onclick="navigateTo('contact')" class="nav-link px-3 py-2 hover:text-[#1e3a8a] transition" data-page="contact">ติดต่อเรา</a>
+            </nav>
+
+            <div class="flex items-center space-x-2 md:space-x-3">
+                <button onclick="openLoginModal()" id="btn-login-trigger" class="bg-gray-100 hover:bg-blue-50 text-gray-600 hover:text-[#1e3a8a] px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1">
+                    <i class="fas fa-user-lock"></i> <span class="hidden sm:inline">เจ้าหน้าที่</span>
+                </button>
+                <button class="block lg:hidden text-gray-700 text-xl p-2 focus:outline-none hover:text-[#1e3a8a]" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu-backdrop" class="fixed inset-0 bg-black/60 z-40 opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleMobileMenu()"></div>
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-[280px] sm:w-[320px] bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="flex items-center justify-between p-4 border-b border-gray-100">
+            <div class="flex items-center space-x-2">
+                <img src="https://img2.pic.in.th/logo_lomkao2-no-BG.png" alt="โลโก้" class="h-8 w-8 object-contain">
+                <span class="text-[#1e3a8a] font-bold text-sm">เมนูหลัก</span>
+            </div>
+            <button onclick="toggleMobileMenu()" class="text-gray-400 hover:text-red-500 bg-gray-50 w-8 h-8 flex items-center justify-center rounded-full"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="flex-1 overflow-y-auto px-3 py-4 space-y-1 text-sm font-medium text-gray-700 no-scrollbar">
+            <a href="javascript:void(0)" onclick="navigateTo('home'); toggleMobileMenu();" class="flex items-center space-x-3 py-3 px-3 bg-blue-50 text-[#1e3a8a] rounded-xl"><i class="fas fa-home w-5 text-center"></i><span>หน้าแรก</span></a>
+
+            <div>
+                <button onclick="toggleMobileSubmenu('mob-about', 'mob-ico-about')" class="w-full flex items-center justify-between py-3 px-3 hover:bg-gray-50 rounded-xl">
+                    <div class="flex items-center space-x-3"><i class="fas fa-hospital w-5 text-center"></i><span>เกี่ยวกับเรา</span></div>
+                    <i id="mob-ico-about" class="fas fa-chevron-down text-[10px] transition-transform text-gray-400"></i>
+                </button>
+                <div id="mob-about" class="hidden flex-col pl-11 pr-3 py-1 space-y-3 mt-1 text-xs text-gray-500">
+                    <a href="javascript:void(0)" onclick="navigateTo('about', 'history'); toggleMobileMenu();" class="block">ประวัติความเป็นมา</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('about', 'vision'); toggleMobileMenu();" class="block">วิสัยทัศน์ และ พันธกิจ</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('about', 'executives'); toggleMobileMenu();" class="block">โครงสร้างผู้บริหาร</a>
+                </div>
+            </div>
+
+            <div>
+                <button onclick="toggleMobileSubmenu('mob-services', 'mob-ico-services')" class="w-full flex items-center justify-between py-3 px-3 hover:bg-gray-50 rounded-xl">
+                    <div class="flex items-center space-x-3"><i class="fas fa-stethoscope w-5 text-center"></i><span>บริการของเรา</span></div>
+                    <i id="mob-ico-services" class="fas fa-chevron-down text-[10px] transition-transform text-gray-400"></i>
+                </button>
+                <div id="mob-services" class="hidden flex-col pl-11 pr-3 py-1 space-y-3 mt-1 text-xs text-gray-500">
+                    <a href="javascript:void(0)" onclick="navigateTo('services', 'schedule'); toggleMobileMenu();" class="block">ตารางออกตรวจแพทย์</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('services', 'clinics'); toggleMobileMenu();" class="block">คลินิกเฉพาะทาง</a>
+                </div>
+            </div>
+
+            <div>
+                <button onclick="toggleMobileSubmenu('mob-patient', 'mob-ico-patient')" class="w-full flex items-center justify-between py-3 px-3 hover:bg-gray-50 rounded-xl">
+                    <div class="flex items-center space-x-3"><i class="fas fa-user-injured w-5 text-center"></i><span>สำหรับผู้รับบริการ</span></div>
+                    <i id="mob-ico-patient" class="fas fa-chevron-down text-[10px] transition-transform text-gray-400"></i>
+                </button>
+                <div id="mob-patient" class="hidden flex-col pl-11 pr-3 py-1 space-y-3 mt-1 text-xs text-gray-500">
+                    <a href="javascript:void(0)" onclick="navigateTo('patient-info', 'rights'); toggleMobileMenu();" class="block">ตรวจสอบสิทธิการรักษา</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('patient-info', 'steps'); toggleMobileMenu();" class="block">ขั้นตอนการรับบริการ</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('patient-info', 'appointment'); toggleMobileMenu();" class="block">นัดหมายออนไลน์</a>
+                </div>
+            </div>
+
+            <div>
+                <button onclick="toggleMobileSubmenu('mob-news', 'mob-ico-news')" class="w-full flex items-center justify-between py-3 px-3 hover:bg-gray-50 rounded-xl">
+                    <div class="flex items-center space-x-3"><i class="fas fa-bullhorn w-5 text-center"></i><span>ข่าวสารและประกาศ</span></div>
+                    <i id="mob-ico-news" class="fas fa-chevron-down text-[10px] transition-transform text-gray-400"></i>
+                </button>
+                <div id="mob-news" class="hidden flex-col pl-11 pr-3 py-1 space-y-3 mt-1 text-xs text-gray-500">
+                    <a href="javascript:void(0)" onclick="navigateTo('news', 'pr'); toggleMobileMenu();" class="block">ข่าวประชาสัมพันธ์</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('news', 'procurement'); toggleMobileMenu();" class="block">ประกาศจัดซื้อจัดจ้าง</a>
+                </div>
+            </div>
+
+            <a href="javascript:void(0)" onclick="navigateTo('contact'); toggleMobileMenu();" class="flex items-center space-x-3 py-3 px-3 hover:bg-gray-50 rounded-xl"><i class="fas fa-envelope w-5 text-center"></i><span>ติดต่อเรา</span></a>
+        </div>
+    </div>
+
+
+    <div id="view-container" class="flex-1">
+
+        <section id="view-home" class="page-view active animate-fadeIn">
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 py-12 md:py-20 border-b border-gray-100">
+                <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4 text-center md:text-left">
+                        <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full font-semibold">ยินดีต้อนรับ</span>
+                        <h2 class="text-2xl md:text-4xl font-extrabold text-[#1e3a8a] admin-editable" id="edit-hero-title" onclick="triggerInlineEdit('edit-hero-title', 'site_hero_title')">โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า</h2>
+                        <h3 class="text-lg md:text-2xl text-gray-700 font-medium admin-editable" id="edit-hero-subtitle" onclick="triggerInlineEdit('edit-hero-subtitle', 'site_hero_subtitle')">บริการด้วยหัวใจ ห่วงใยดุจญาติมิตร</h3>
+                        <p class="text-sm text-gray-500 max-w-md mx-auto md:mx-0">พัฒนาคุณภาพบริการ พัฒนาสิ่งแวดล้อม มุ่งสู่มาตรฐานระดับสากล เพื่อสุขภาวะที่ดีของชุมชน</p>
+                        <div class="pt-2 flex flex-wrap justify-center md:justify-start gap-3">
+                            <button onclick="navigateTo('services', 'schedule')" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full text-xs font-semibold shadow-sm transition"><i class="fas fa-calendar-alt mr-1"></i> ตารางหมอออกตรวจ</button>
+                            <button onclick="navigateTo('patient-info', 'appointment')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-full text-xs font-semibold shadow-sm transition"><i class="fas fa-calendar-check mr-1"></i> นัดหมายออนไลน์</button>
+                        </div>
+                    </div>
+                    <div class="hidden md:block">
+                        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="rounded-2xl shadow-lg w-full h-64 object-cover" alt="Hospital interior">
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 -mt-8 relative z-10">
+                <div class="bg-white rounded-xl shadow-md p-4 grid grid-cols-2 sm:grid-cols-4 gap-4 border border-gray-100">
+                    <div onclick="navigateTo('patient-info', 'rights')" class="flex items-center space-x-3 p-2 hover:bg-blue-50 rounded-lg cursor-pointer transition">
+                        <div class="p-3 bg-blue-100 rounded-lg text-blue-600"><i class="fas fa-clipboard-check text-lg"></i></div>
+                        <div><h4 class="font-bold text-xs sm:text-sm text-gray-800">ตรวจสอบสิทธิ</h4><p class="text-[10px] text-gray-400">เช็คสิทธิรักษาพยาบาล</p></div>
+                    </div>
+                    <div onclick="navigateTo('services', 'schedule')" class="flex items-center space-x-3 p-2 hover:bg-blue-50 rounded-lg cursor-pointer transition">
+                        <div class="p-3 bg-teal-100 rounded-lg text-teal-600"><i class="fas fa-user-md text-lg"></i></div>
+                        <div><h4 class="font-bold text-xs sm:text-sm text-gray-800">ตารางแพทย์</h4><p class="text-[10px] text-gray-400">ค้นหาเวลาออกตรวจ</p></div>
+                    </div>
+                    <div onclick="navigateTo('news', 'pr')" class="flex items-center space-x-3 p-2 hover:bg-blue-50 rounded-lg cursor-pointer transition">
+                        <div class="p-3 bg-amber-100 rounded-lg text-amber-600"><i class="fas fa-bullhorn text-lg"></i></div>
+                        <div><h4 class="font-bold text-xs sm:text-sm text-gray-800">ประกาศล่าสุด</h4><p class="text-[10px] text-gray-400">ข่าวสารจัดซื้อจัดจ้าง</p></div>
+                    </div>
+                    <div onclick="navigateTo('contact')" class="flex items-center space-x-3 p-2 hover:bg-blue-50 rounded-lg cursor-pointer transition">
+                        <div class="p-3 bg-rose-100 rounded-lg text-rose-600"><i class="fas fa-phone-alt text-lg"></i></div>
+                        <div><h4 class="font-bold text-xs sm:text-sm text-gray-800">ติดต่อฉุกเฉิน</h4><p class="text-[10px] text-gray-400">เบอร์สายตรง แผนที่</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="flex justify-between items-center border-b pb-2">
+                        <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2"><i class="fas fa-newspaper text-blue-600"></i> ข่าวประชาสัมพันธ์ล่าสุด</h3>
+                        <button onclick="navigateTo('news', 'pr')" class="text-xs text-blue-600 hover:underline">ดูทั้งหมด</button>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white border rounded-xl overflow-hidden hover:shadow-md transition">
+                            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60" class="w-full h-40 object-cover" alt="PR">
+                            <div class="p-4 space-y-2">
+                                <span class="text-[10px] text-gray-400"><i class="far fa-calendar-alt mr-1"></i> 19 มิถุนายน 2569</span>
+                                <h4 class="font-bold text-sm text-gray-800 line-clamp-2 admin-editable" id="edit-news-1" onclick="triggerInlineEdit('edit-news-1', 'news_1_title')">รับสมัครบุคคลเพื่อคัดเลือกเป็นพนักงานกระทรวงสาธารณสุขทั่วไป</h4>
+                            </div>
+                        </div>
+                        <div class="bg-white border rounded-xl overflow-hidden hover:shadow-md transition">
+                            <img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60" class="w-full h-40 object-cover" alt="PR">
+                            <div class="p-4 space-y-2">
+                                <span class="text-[10px] text-gray-400"><i class="far fa-calendar-alt mr-1"></i> 15 มิถุนายน 2569</span>
+                                <h4 class="font-bold text-sm text-gray-800 line-clamp-2 admin-editable" id="edit-news-2" onclick="triggerInlineEdit('edit-news-2', 'news_2_title')">เชิญชวนประชาชนกลุ่มเสี่ยงเข้ารับบริการฉีดวัคซีนไข้หวัดใหญ่ฟรีประจำปี</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-gradient-to-br from-blue-800 to-indigo-900 text-white rounded-xl p-6 shadow-sm">
+                        <h3 class="font-bold text-base mb-4 flex items-center gap-2"><i class="fas fa-chart-bar"></i> ข้อมูลสถิติผู้รับบริการ</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white/10 p-3 rounded-lg"><div class="text-xl font-bold">180</div><div class="text-[10px] text-blue-200">จำนวนเตียงผู้ป่วย</div></div>
+                            <div class="bg-white/10 p-3 rounded-lg"><div class="text-xl font-bold">45</div><div class="text-[10px] text-blue-200">จำนวนแพทย์ผู้เชี่ยวชาญ</div></div>
+                            <div class="bg-white/10 p-3 rounded-lg" class="col-span-2"><div class="text-xl font-bold">250K+</div><div class="text-[10px] text-blue-200">ผู้ป่วยนอกที่ไว้วางใจต่อปี</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-about" class="page-view max-w-5xl mx-auto px-4 py-8 space-y-12">
+            <div id="sec-history" class="bg-white p-6 rounded-xl border shadow-sm space-y-4">
+                <h3 class="text-xl font-bold text-[#1e3a8a] border-b pb-2 flex items-center gap-2"><i class="fas fa-history"></i> ประวัติความเป็นมา</h3>
+                <p class="text-sm text-gray-600 leading-relaxed admin-editable" id="edit-about-history" onclick="triggerInlineEdit('edit-about-history', 'about_history')">
+                    โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า เป็นหนึ่งในโรงพยาบาลสมเด็จพระยุพราชที่จัดตั้งขึ้นเพื่อเฉลิมพระเกียรติพระบาทสมเด็จพระเจ้าอยู่หัว เมื่อครั้งดำรงพระอิสริยยศสมเด็จพระบรมโอรสาธิราชฯ สยามมกุฎราชกุมาร เพื่อให้การรักษาพยาบาลแก่ประชาชนในท้องถิ่นทุรกันดารได้อย่างทั่วถึงและมีประสิทธิภาพ มีการพัฒนาขยายขีดความสามารถในการให้บริการแก่ประชาชนมาอย่างต่อเนื่องยาวนาน
+                </p>
+            </div>
+            <div id="sec-vision" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl border shadow-sm space-y-3">
+                    <h3 class="text-lg font-bold text-emerald-700 flex items-center gap-2"><i class="fas fa-eye"></i> วิสัยทัศน์ (Vision)</h3>
+                    <p class="text-sm text-gray-600 admin-editable" id="edit-about-vision" onclick="triggerInlineEdit('edit-about-vision', 'about_vision')">"เป็นโรงพยาบาลชั้นนำที่เป็นเลิศด้านบริการสุขภาพ ได้มาตรฐานระดับสากล และชุมชนมีส่วนร่วมเพื่อสุขภาวะที่ยั่งยืน"</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border shadow-sm space-y-3">
+                    <h3 class="text-lg font-bold text-blue-700 flex items-center gap-2"><i class="fas fa-bullseye"></i> พันธกิจ (Mission)</h3>
+                    <ul class="text-sm text-gray-600 list-disc pl-4 space-y-1">
+                        <li>ให้บริการรักษาพยาบาลที่ได้คุณภาพและปลอดภัย</li>
+                        <li>ส่งเสริมป้องกันและฟื้นฟูสุขภาพเชิงรุกร่วมกับเครือข่าย</li>
+                        <li>บริหารจัดการด้วยหลักธรรมาภิบาลและเทคโนโลยีดิจิทัล</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="sec-executives" class="bg-white p-6 rounded-xl border shadow-sm text-center space-y-6">
+                <h3 class="text-xl font-bold text-[#1e3a8a] border-b pb-2 text-left"><i class="fas fa-users-cog"></i> โครงสร้างคณะผู้บริหาร</h3>
+                <div class="max-w-xs mx-auto bg-slate-50 p-4 border rounded-xl space-y-2">
+                    <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto flex items-center justify-center"><i class="fas fa-user-tie text-3xl text-gray-400"></i></div>
+                    <h4 class="font-bold text-sm text-gray-800 admin-editable" id="edit-exec-director" onclick="triggerInlineEdit('edit-exec-director', 'exec_director_name')">นายแพทย์ผู้อำนวยการโรงพยาบาล</h4>
+                    <p class="text-xs text-blue-600 font-medium">ผู้อำนวยการโรงพยาบาลสมเด็จพระยุพราชหล่มเก่า</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-services" class="page-view max-w-6xl mx-auto px-4 py-8 space-y-8">
+            <div id="sec-schedule" class="bg-white p-6 rounded-xl border shadow-sm space-y-4">
+                <h3 class="text-xl font-bold text-[#1e3a8a] border-b pb-2"><i class="fas fa-clock"></i> ตารางออกตรวจแพทย์ทั่วไปและแผนกผู้ป่วยนอก</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left border-collapse border border-gray-100">
+                        <thead>
+                            <tr class="bg-slate-50 text-gray-700">
+                                <th class="border p-3">วันทำการ</th>
+                                <th class="border p-3">เวลา 08:30 - 12:00 น.</th>
+                                <th class="border p-3">เวลา 13:00 - 16:30 น.</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600">
+                            <tr>
+                                <td class="border p-3 font-semibold text-gray-800">จันทร์ - ศุกร์</td>
+                                <td class="border p-3">คลินิกโรคทั่วไป / ตรวจโรคเฉพาะทาง</td>
+                                <td class="border p-3">คลินิกเฉพาะโรค / คลินิกสร้างเสริมสุขภาพ</td>
+                            </tr>
+                            <tr class="bg-slate-50/50">
+                                <td class="border p-3 font-semibold text-gray-800">เสาร์ - อาทิตย์</td>
+                                <td class="border p-3 text-amber-600 font-medium">คลินิกนอกเวลาทำการ (กรณีฉุกเฉินติดต่อห้อง ER ตลอด 24 ชม.)</td>
+                                <td class="border p-3 text-gray-400">ปิดทำการแผนกผู้ป่วยนอกปกติ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="sec-clinics" class="space-y-4">
+                <h3 class="text-xl font-bold text-[#1e3a8a]"><i class="fas fa-briefcase-medical"></i> คลินิกเฉพาะทางที่เปิดให้บริการ</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="bg-white p-4 rounded-xl border shadow-sm flex items-start space-x-3">
+                        <div class="text-blue-600 text-xl"><i class="fas fa-baby"></i></div>
+                        <div><h4 class="font-bold text-sm text-gray-800">คลินิกกุมารเวชกรรม</h4><p class="text-xs text-gray-500">ให้บริการดูแลและรักษาพยาบาลเด็กและทารกแรกเกิด</p></div>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border shadow-sm flex items-start space-x-3">
+                        <div class="text-rose-600 text-xl"><i class="fas fa-female"></i></div>
+                        <div><h4 class="font-bold text-sm text-gray-800">คลินิกสูติ-นรีเวชกรรม</h4><p class="text-xs text-gray-500">ฝากครรภ์ ตรวจโรคสตรีและให้คำปรึกษาวางแผนครอบครัว</p></div>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border shadow-sm flex items-start space-x-3">
+                        <div class="text-emerald-600 text-xl"><i class="fas fa-bone"></i></div>
+                        <div><h4 class="font-bold text-sm text-gray-800">คลินิกศัลยกรรมกระดูกและข้อ</h4><p class="text-xs text-gray-500">รักษาโรคกระดูก ข้อต่อ เส้นเอ็น และการบาดเจ็บจากอุบัติเหตุ</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-patient-info" class="page-view max-w-5xl mx-auto px-4 py-8 space-y-10">
+            <div id="sec-rights" class="bg-white p-6 rounded-xl border shadow-sm space-y-3">
+                <h3 class="text-xl font-bold text-[#1e3a8a] border-b pb-2"><i class="fas fa-id-card-alt"></i> การตรวจสอบสิทธิการรักษาพยาบาล</h3>
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    ผู้รับบริการสามารถยื่นบัตรประจำตัวประชาชน ณ จุดลงทะเบียนเพื่อตรวจสอบสิทธิการรักษาพยาบาล เช่น สิทธิหลักประกันสุขภาพแห่งชาติ (บัตรทอง/บัตรทอง ท.97), สิทธิประกันสังคม, สิทธิข้าราชการ หรือสิทธิประกันสุขภาพเอกชน เพื่อรับการใช้สิทธิประโยชน์ตามนโยบายรัฐบาลอย่างครบถ้วน
+                </p>
+            </div>
+            
+            <div id="sec-steps" class="bg-white p-6 rounded-xl border shadow-sm space-y-4">
+                <h3 class="text-xl font-bold text-[#1e3a8a] border-b pb-2"><i class="fas fa-network-wired"></i> ขั้นตอนการเข้ารับบริการผู้ป่วยนอก (OPD)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-gray-100"><div class="font-bold text-blue-600 text-lg mb-1">ขั้นตอนที่ 1</div><p class="text-xs text-gray-700 font-semibold">คัดกรองอาการ / ตรวจวัดสัญญาณชีพ</p><p class="text-[11px] text-gray-400 mt-1">ยื่นบัตรประชาชน ชั่งน้ำหนัก วัดความดัน</p></div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-gray-100"><div class="font-bold text-blue-600 text-lg mb-1">ขั้นตอนที่ 2</div><p class="text-xs text-gray-700 font-semibold">พบแพทย์เพื่อตรวจวินิจฉัย</p><p class="text-[11px] text-gray-400 mt-1">รอเรียกคิวตามห้องตรวจเฉพาะทาง</p></div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-gray-100"><div class="font-bold text-blue-600 text-lg mb-1">ขั้นตอนที่ 3</div><p class="text-xs text-gray-700 font-semibold">รับยา / ชำระเงิน (ถ้ามี)</p><p class="text-[11px] text-gray-400 mt-1">รับคำแนะนำการใช้ยา ณ ห้องจ่ายยา</p></div>
+                </div>
+            </div>
+
+            <div id="sec-appointment" class="bg-white p-6 rounded-xl border shadow-lg max-w-xl mx-auto space-y-4">
+                <div class="text-center space-y-1">
+                    <h3 class="text-xl font-bold text-emerald-700"><i class="fas fa-calendar-check"></i> บริการนัดหมายแพทย์ล่วงหน้าออนไลน์</h3>
+                    <p class="text-xs text-gray-400">กรอกข้อมูลให้ครบถ้วน เจ้าหน้าที่จะติดต่อกลับเพื่อยืนยันวันนัดหมายภายใน 24 ชม.</p>
+                </div>
+                <form onsubmit="handleMockAppointment(event)" class="space-y-3 text-xs md:text-sm">
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-1">ชื่อ-นามสกุล ผู้ป่วย</label>
+                        <input type="text" required class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500" placeholder="นาย สมชาย ใจดี">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-1">เบอร์โทรศัพท์ติดต่อ</label>
+                            <input type="tel" required class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500" placeholder="08X-XXXXXXX">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-1">วันที่ต้องการนัดหมาย</label>
+                            <input type="date" required class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-1">ต้องการนัดหมายพบแพทย์แผนกใด</label>
+                        <select class="w-full border rounded-lg px-3 py-2 bg-white outline-none focus:border-blue-500">
+                            <option>ตรวจโรคทั่วไป</option>
+                            <option>คลินิกเด็ก</option>
+                            <option>คลินิกศัลยกรรมกระดูก</option>
+                            <option>คลินิกทันตกรรม</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg shadow transition mt-2">ส่งข้อมูลการนัดหมาย</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="view-news" class="page-view max-w-5xl mx-auto px-4 py-8 space-y-12">
+            <div id="sec-pr" class="space-y-4">
+                <h3 class="text-xl font-bold text-[#1e3a8a] border-b pb-2"><i class="fas fa-bullhorn"></i> ข่าวสารประชาสัมพันธ์ทั่วไป</h3>
+                <div class="space-y-3">
+                    <div class="bg-white p-4 rounded-xl border shadow-sm flex justify-between items-center hover:bg-slate-50/50 transition">
+                        <div>
+                            <h4 class="font-bold text-sm text-gray-800 admin-editable" id="edit-pr-list-1" onclick="triggerInlineEdit('edit-pr-list-1', 'news_1_title')">รับสมัครบุคคลเพื่อคัดเลือกเป็นพนักงานกระทรวงสาธารณสุขทั่วไป</h4>
+                            <p class="text-[11px] text-gray-400 mt-1"><i class="far fa-calendar-alt mr-1"></i> ประกาศเมื่อ 19 มิถุนายน 2569 | ฝ่ายทรัพยากรบุคคล</p>
+                        </div>
+                        <span class="bg-blue-50 text-blue-600 text-xs px-3 py-1 rounded-full font-medium">เปิดอ่าน</span>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border shadow-sm flex justify-between items-center hover:bg-slate-50/50 transition">
+                        <div>
+                            <h4 class="font-bold text-sm text-gray-800 admin-editable" id="edit-pr-list-2" onclick="triggerInlineEdit('edit-pr-list-2', 'news_2_title')">เชิญชวนประชาชนกลุ่มเสี่ยงเข้ารับบริการฉีดวัคซีนไข้หวัดใหญ่ฟรีประจำปี</h4>
+                            <p class="text-[11px] text-gray-400 mt-1"><i class="far fa-calendar-alt mr-1"></i> ประกาศเมื่อ 15 มิถุนายน 2569 | ฝ่ายส่งเสริมสุขภาพ</p>
+                        </div>
+                        <span class="bg-blue-50 text-blue-600 text-xs px-3 py-1 rounded-full font-medium">เปิดอ่าน</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="sec-procurement" class="space-y-4">
+                <h3 class="text-xl font-bold text-amber-700 border-b pb-2"><i class="fas fa-file-invoice-dollar"></i> ประกาศจัดซื้อจัดจ้างภาครัฐ</h3>
+                <div class="bg-white rounded-xl border shadow-sm overflow-hidden text-xs md:text-sm">
+                    <div class="p-4 bg-amber-50/50 border-b"><h4 class="font-bold text-amber-900">รายการพัสดุและจัดซื้อครุภัณฑ์การแพทย์ล่าสุด</h4></div>
+                    <div class="divide-y">
+                        <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <div><p class="font-medium text-gray-800">ประกวดราคาซื้อครุภัณฑ์การแพทย์ ยูนิตทำฟันประสิทธิภาพสูง ด้วยวิธีประกวดราคาอิเล็กทรอนิกส์ (e-bidding)</p><p class="text-[11px] text-gray-400 mt-0.5">กำหนดยื่นข้อเสนอวันที่ 25 มิถุนายน 2569</p></div>
+                            <button class="text-xs text-amber-700 bg-amber-50 px-3 py-1.5 rounded-md font-bold hover:bg-amber-100 self-start sm:self-center"><i class="fas fa-download mr-1"></i> โหลดเอกสาร</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-contact" class="page-view max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-xl border shadow-sm space-y-4">
+                <h3 class="text-xl font-bold text-[#1e3a8a] border-b pb-2"><i class="fas fa-address-book"></i> ช่องทางการติดต่อ</h3>
+                <div class="space-y-3 text-sm text-gray-600">
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-map-marker-alt text-blue-600 mt-1 w-5 text-center"></i>
+                        <p class="admin-editable" id="edit-contact-address" onclick="triggerInlineEdit('edit-contact-address', 'contact_address')">194 หมู่ 1 ตำบลหล่มเก่า อำเภอหล่มเก่า จังหวัดเพชรบูรณ์ 67120</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-phone-alt text-blue-600 w-5 text-center"></i>
+                        <p class="admin-editable" id="edit-contact-phone" onclick="triggerInlineEdit('edit-contact-phone', 'contact_phone')">056-709-555</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-envelope text-blue-600 w-5 text-center"></i>
+                        <p class="admin-editable" id="edit-contact-email" onclick="triggerInlineEdit('edit-contact-email', 'contact_email')">lomkao@cph.go.th</p>
+                    </div>
+                </div>
+                <div class="pt-2 flex space-x-3">
+                    <a href="#" class="h-9 w-9 bg-[#1877F2] text-white rounded-full flex items-center justify-center hover:opacity-90 transition"><i class="fab fa-facebook-f text-sm"></i></a>
+                    <a href="#" class="h-9 w-9 bg-[#00B900] text-white rounded-full flex items-center justify-center hover:opacity-90 transition"><i class="fab fa-line text-sm"></i></a>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl border shadow-sm space-y-3 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800"><i class="fas fa-map-marked-alt"></i> แผนที่ที่ตั้งโรงพยาบาล</h3>
+                    <p class="text-xs text-gray-400 mb-2">ท่านสามารถกดคลิกเพื่อนำทางผ่าน Google Maps บนอุปกรณ์มือถือได้ทันที</p>
+                </div>
+                <div class="bg-slate-100 rounded-xl h-48 flex items-center justify-center border text-gray-400 relative overflow-hidden group shadow-inner">
+                    <img src="https://developers.google.com/static/maps/images/landing/hero_maps_static_api.png" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Mock Map">
+                    <div class="absolute inset-0 bg-black/10"></div>
+                    <a href="https://maps.google.com/?q=โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า" target="_blank" class="absolute bg-white/95 backdrop-blur-sm shadow px-3 py-1.5 rounded-lg font-bold text-xs text-gray-800 flex items-center gap-1 hover:bg-blue-50"><i class="fas fa-location-arrow text-blue-600"></i> เปิด Google Maps นำทาง</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-admin-dashboard" class="page-view max-w-6xl mx-auto px-4 py-8 space-y-6">
+            <div class="bg-white p-6 rounded-xl border shadow-md space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 gap-2">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-800"><i class="fas fa-sliders-h text-blue-600"></i> ศูนย์ควบคุมและแก้ไขเนื้อหาเว็บ</h2>
+                        <p class="text-xs text-gray-400 mt-0.5">แก้ไขข้อมูลช่องอินพุตด้านล่างนี้ จากนั้นกด "บันทึกการเปลี่ยนแปลงทั้งหมด" ระบบจะอัปเดตข้อมูลขึ้นหน้าเว็บจริงให้ทันที</p>
+                    </div>
+                    <button onclick="saveAllSettings()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-lg shadow flex items-center gap-2 transition w-full sm:w-auto justify-center">
+                        <i class="fas fa-save"></i> บันทึกการเปลี่ยนแปลงทั้งหมด
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4 bg-slate-50/50 p-4 border rounded-xl">
+                        <h3 class="font-bold text-sm text-[#1e3a8a] border-b pb-1.5"><i class="fas fa-home"></i> เนื้อหาหน้าแรกและสโลแกน</h3>
+                        <div class="space-y-2.5 text-xs md:text-sm">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-1">ชื่อเว็บไซต์หลัก (Header Title)</label>
+                                <input type="text" id="inp-site-title" class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-1">หัวข้อแบนเนอร์หลัก (Hero Title)</label>
+                                <input type="text" id="inp-hero-title" class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-1">คำขวัญ/สโลแกนโรงพยาบาล (Hero Subtitle)</label>
+                                <input type="text" id="inp-hero-subtitle" class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 bg-slate-50/50 p-4 border rounded-xl">
+                        <h3 class="font-bold text-sm text-rose-700 border-b pb-1.5"><i class="fas fa-phone-alt"></i> ข้อมูลติดต่อและการอัปเดตข่าวสาร</h3>
+                        <div class="space-y-2.5 text-xs md:text-sm">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-1">ที่ตั้งของโรงพยาบาล</label>
+                                <textarea id="inp-contact-address" rows="1" class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-1">เบอร์โทรศัพท์สายตรง</label>
+                                <input type="text" id="inp-contact-phone" class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-1">หัวข้อประกาศประชาสัมพันธ์ลำดับที่ 1</label>
+                                <input type="text" id="inp-news-1" class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50/50 p-4 border rounded-xl space-y-3 text-xs md:text-sm">
+                    <h3 class="font-bold text-sm text-slate-700 border-b pb-1.5"><i class="fas fa-hospital"></i> รายละเอียดหน้าเกี่ยวกับองค์กร (About Us Content)</h3>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-1">คำบรรยายประวัติความเป็นมา</label>
+                        <textarea id="inp-about-history" rows="3" class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500"></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-1">ข้อความวิสัยทัศน์</label>
+                            <input type="text" id="inp-about-vision" class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-1">ตำแหน่งหัวหน้าฝ่ายบริหาร/ผู้อำนวยการ</label>
+                            <input type="text" id="inp-exec-director" class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="bg-slate-800 text-white py-4 mt-8 text-center text-xs border-t border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-2">
+            <p>© 2026 โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า. พัฒนาโหมดจำลองการแก้ไขระบบแอดมินสำหรับอุปกรณ์เคลื่อนที่</p>
+            <div class="flex space-x-3 text-slate-400">
+                <a href="javascript:void(0)" onclick="navigateTo('home')" class="hover:underline">หน้าหลัก</a>
+                <span>|</span>
+                <a href="javascript:void(0)" onclick="openLoginModal()" class="hover:underline">แอดมินล็อกอิน</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <div id="login-modal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4 backdrop-blur-sm animate-fadeIn">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border relative space-y-4">
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i class="fas fa-times text-lg"></i></button>
+            <div class="text-center space-y-1">
+                <div class="h-12 w-12 bg-blue-100 text-[#1e3a8a] rounded-full mx-auto flex items-center justify-center text-xl"><i class="fas fa-lock"></i></div>
+                <h3 class="font-bold text-lg text-gray-800">เข้าสู่ระบบเจ้าหน้าที่แอดมิน</h3>
+                <p class="text-[11px] text-gray-400">ระบุบัญชีผู้ใช้งานเพื่อเปิดใช้งานระบบการบันทึกแก้ไขข้อมูล</p>
+            </div>
+            
+            <form onsubmit="handleAdminLogin(event)" class="space-y-3 text-xs md:text-sm">
+                <div>
+                    <label class="block text-gray-600 font-semibold mb-1">ชื่อผู้ใช้งาน (Username)</label>
+                    <input type="text" id="login-user" required class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500" placeholder="ระบุแอดมิน (admin)">
+                </div>
+                <div>
+                    <label class="block text-gray-600 font-semibold mb-1">รหัสผ่าน (Password)</label>
+                    <input type="password" id="login-pass" required class="w-full border rounded-lg px-3 py-2 outline-none focus:border-blue-500" placeholder="ระบุรหัสผ่าน (1234)">
+                </div>
+                <div id="login-error-msg" class="text-red-600 text-xs font-semibold hidden text-center"><i class="fas fa-exclamation-circle mr-1"></i> ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!</div>
+                <button type="submit" class="w-full bg-[#1e3a8a] hover:bg-blue-800 text-white font-bold py-2 rounded-lg transition shadow mt-1">ยืนยันการลงชื่อเข้าใช้งาน</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        // ข้อมูลตั้งต้นของเว็บไซต์ (Default Data Setup)
+        const defaultSiteData = {
+            site_title: "โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า",
+            site_hero_title: "โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า",
+            site_hero_subtitle: "บริการด้วยหัวใจ ห่วงใยดุจญาติมิตร",
+            news_1_title: "รับสมัครบุคคลเพื่อคัดเลือกเป็นพนักงานกระทรวงสาธารณสุขทั่วไป",
+            news_2_title: "เชิญชวนประชาชนกลุ่มเสี่ยงเข้ารับบริการฉีดวัคซีนไข้หวัดใหญ่ฟรีประจำปี",
+            about_history: "โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า เป็นหนึ่งในโรงพยาบาลสมเด็จพระยุพราชที่จัดตั้งขึ้นเพื่อเฉลิมพระเกียรติพระบาทสมเด็จพระเจ้าอยู่หัว เมื่อครั้งดำรงพระอิสริยยศสมเด็จพระบรมโอรสาธิราชฯ สยามมกุฎราชกุมาร เพื่อให้การรักษาพยาบาลแก่ประชาชนในท้องถิ่นทุรกันดารได้อย่างทั่วถึงและมีประสิทธิภาพ มีการพัฒนาขยายขีดความสามารถในการให้บริการแก่ประชาชนมาอย่างต่อเนื่องยาวนาน",
+            about_vision: `"เป็นโรงพยาบาลชั้นนำที่เป็นเลิศด้านบริการสุขภาพ ได้มาตรฐานระดับสากล และชุมชนมีส่วนร่วมเพื่อสุขภาวะที่ยั่งยืน"`,
+            exec_director_name: "นายแพทย์ผู้อำนวยการโรงพยาบาลหล่มเก่า",
+            contact_address: "194 หมู่ 1 ตำบลหล่มเก่า อำเภอหล่มเก่า จังหวัดเพชรบูรณ์ 67120",
+            contact_phone: "056-709-555",
+            contact_email: "lomkao@cph.go.th"
+        };
+
+        // ตัวแปรเก็บสถานะการเข้าใช้งาน
+        let siteData = {};
+        let isAdminLoggedIn = false;
+
+        // ฟังก์ชันโหลดข้อมูลขึ้นมาทำงาน
+        function initSite() {
+            // ดึงข้อมูลจาก LocalStorage ถ้าไม่มีให้ใช้ข้อมูลเริ่มต้น
+            const localData = localStorage.getItem('lomkao_hospital_data');
+            if (localData) {
+                siteData = JSON.parse(localData);
+            } else {
+                siteData = { ...defaultSiteData };
+                localStorage.setItem('lomkao_hospital_data', JSON.stringify(siteData));
+            }
+
+            // ตรวจสอบสถานะการล็อกอินเดิม
+            if (localStorage.getItem('lomkao_admin_login') === 'true') {
+                isAdminLoggedIn = true;
+                showAdminInterface();
+            }
+
+            applyDataToDOM();
+            syncDataToInputs();
+        }
+
+        // อัปเดตข้อมูลตัวอักษรลงบนหน้า HTML ตัวจริง
+        function applyDataToDOM() {
+            document.getElementById('txt-site-title').innerText = siteData.site_title;
+            document.getElementById('edit-hero-title').innerText = siteData.site_hero_title;
+            document.getElementById('edit-hero-subtitle').innerText = siteData.site_hero_subtitle;
+            document.getElementById('edit-news-1').innerText = siteData.news_1_title;
+            document.getElementById('edit-news-2').innerText = siteData.news_2_title;
+            document.getElementById('edit-pr-list-1').innerText = siteData.news_1_title;
+            document.getElementById('edit-pr-list-2').innerText = siteData.news_2_title;
+            document.getElementById('edit-about-history').innerText = siteData.about_history;
+            document.getElementById('edit-about-vision').innerText = siteData.about_vision;
+            document.getElementById('edit-exec-director').innerText = siteData.exec_director_name;
+            document.getElementById('edit-contact-address').innerText = siteData.contact_address;
+            document.getElementById('edit-contact-phone').innerText = siteData.contact_phone;
+            document.getElementById('edit-contact-email').innerText = siteData.contact_email;
+        }
+
+        // ลิงก์ข้อมูลไปวางในช่องอินพุตในหน้า Dashboard ของแอดมิน
+        function syncDataToInputs() {
+            document.getElementById('inp-site-title').value = siteData.site_title;
+            document.getElementById('inp-hero-title').value = siteData.site_hero_title;
+            document.getElementById('inp-hero-subtitle').value = siteData.site_hero_subtitle;
+            document.getElementById('inp-news-1').value = siteData.news_1_title;
+            document.getElementById('inp-contact-address').value = siteData.contact_address;
+            document.getElementById('inp-contact-phone').value = siteData.contact_phone;
+            document.getElementById('inp-about-history').value = siteData.about_history;
+            document.getElementById('inp-about-vision').value = siteData.about_vision;
+            document.getElementById('inp-exec-director').value = siteData.exec_director_name;
+        }
+
+        // ระบบสลับการแสดงผลหน้าเพจ (SPA Client-Side Router)
+        function navigateTo(pageId, sectionId = null) {
+            // ซ่อนหน้าเพจเดิมทั้งหมด
+            const pages = document.querySelectorAll('.page-view');
+            pages.forEach(p => p.classList.remove('active'));
+
+            // เปิดหน้าเพจที่เลือก
+            const targetPage = document.getElementById('view-' + pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // ไฮไลต์ลิงก์เมนูให้ตรงสี
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(l => {
+                if (l.getAttribute('data-page') === pageId) {
+                    l.classList.add('text-[#1e3a8a]', 'font-semibold', 'border-b-2', 'border-[#1e3a8a]');
+                } else {
+                    l.classList.remove('text-[#1e3a8a]', 'font-semibold', 'border-b-2', 'border-[#1e3a8a]');
+                }
+            });
+
+            // เลื่อนจอขึ้นด้านบนสุด
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // เลื่อนไปยังเซกชันย่อยเจาะจง (ถ้ามีระบุส่งมา)
+            if (sectionId) {
+                setTimeout(() => {
+                    const el = document.getElementById('sec-' + sectionId);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 150);
+            }
+        }
+
+        // ฟังก์ชันควบคุมแถบเมนูในอุปกรณ์พกพา (Mobile Toggle Sidebar)
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const backdrop = document.getElementById('mobile-menu-backdrop');
+            const isOpen = menu.classList.contains('translate-x-0');
+
+            if (isOpen) {
+                menu.classList.remove('translate-x-0');
+                menu.classList.add('translate-x-full');
+                backdrop.classList.replace('opacity-100', 'opacity-0');
+                backdrop.classList.add('pointer-events-none');
+            } else {
+                menu.classList.replace('translate-x-full', 'translate-x-0');
+                backdrop.classList.replace('opacity-0', 'opacity-100');
+                backdrop.classList.remove('pointer-events-none');
+            }
+        }
+
+        function toggleMobileSubmenu(submenuId, iconId) {
+            const sub = document.getElementById(submenuId);
+            const ico = document.getElementById(iconId);
+            sub.classList.toggle('hidden');
+            sub.classList.toggle('flex');
+            ico.classList.toggle('rotate-180');
+        }
+
+        // ระบบควบคุมโมดอล ล็อกอินแอดมิน
+        function openLoginModal() {
+            if (isAdminLoggedIn) {
+                navigateTo('admin-dashboard');
+            } else {
+                document.getElementById('login-modal').classList.replace('hidden', 'flex');
+                document.getElementById('login-error-msg').classList.add('hidden');
+            }
+        }
+
+        function closeLoginModal() {
+            document.getElementById('login-modal').classList.replace('flex', 'hidden');
+        }
+
+        // ตรวจสอบชื่อและรหัสผ่านเมื่อกดส่งฟอร์มล็อกอิน
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const user = document.getElementById('login-user').value;
+            const pass = document.getElementById('login-pass').value;
+
+            if (user === 'admin' && pass === '1234') {
+                isAdminLoggedIn = true;
+                localStorage.setItem('lomkao_admin_login', 'true');
+                closeLoginModal();
+                showAdminInterface();
+                navigateTo('admin-dashboard');
+                alert('ยินดีต้อนรับเข้าสู่ระบบ! เปิดโหมดจัดการข้อมูลแอดมินเรียบร้อยแล้ว');
+            } else {
+                document.getElementById('login-error-msg').classList.remove('hidden');
+            }
+        }
+
+        // ออกจากระบบแอดมิน
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            localStorage.removeItem('lomkao_admin_login');
+            document.getElementById('admin-top-bar').classList.replace('flex', 'hidden');
+            document.getElementById('btn-login-trigger').innerHTML = `<i class="fas fa-user-lock"></i> <span class="hidden sm:inline">เจ้าหน้าที่</span>`;
+            
+            // ลบสถานะการคลิกแก้จากหน้าบ้าน
+            const editables = document.querySelectorAll('.admin-editable');
+            editables.forEach(e => e.classList.remove('outline', 'dashed'));
+            
+            navigateTo('home');
+            alert('ออกจากระบบผู้ดูแลระบบเรียบร้อยแล้ว');
+        }
+
+        // แสดงผลหน้าตาและส่วนเสริมของแอดมิน
+        function showAdminInterface() {
+            document.getElementById('admin-top-bar').classList.replace('hidden', 'flex');
+            document.getElementById('btn-login-trigger').innerHTML = `<i class="fas fa-sliders-h text-blue-600"></i> <span class="text-blue-600">เมนูแอดมิน</span>`;
+        }
+
+        // เมื่อคลิกคำบนหน้าเว็บในโหมดแอดมิน จะเปิดหน้า Dashboard ไปจุดแก้ไขนั้นอัตโนมัติ
+        function triggerInlineEdit(domId, dataKey) {
+            if (!isAdminLoggedIn) return;
+            navigateTo('admin-dashboard');
+            // ไฮไลต์โฟกัสไปยังช่องอินพุตของข้อมูลชิ้นนั้นๆ
+            const mapping = {
+                site_hero_title: 'inp-hero-title',
+                site_hero_subtitle: 'inp-hero-subtitle',
+                news_1_title: 'inp-news-1',
+                news_2_title: 'inp-news-1',
+                about_history: 'inp-about-history',
+                about_vision: 'inp-about-vision',
+                exec_director_name: 'inp-exec-director',
+                contact_address: 'inp-contact-address',
+                contact_phone: 'inp-contact-phone',
+                contact_email: 'inp-contact-address'
+            };
+            const targetInput = document.getElementById(mapping[dataKey]);
+            if (targetInput) {
+                targetInput.focus();
+                targetInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                targetInput.classList.add('ring-2', 'ring-blue-500');
+                setTimeout(() => targetInput.classList.remove('ring-2', 'ring-blue-500'), 2000);
+            }
+        }
+
+        // แอดมินกดบันทึกข้อมูลทั้งหมด
+        function saveAllSettings() {
+            if (!isAdminLoggedIn) {
+                alert('เซสชันของท่านหมดอายุ กรุณาล็อกอินใหม่อีกครั้ง');
+                return;
+            }
+
+            // ดึงค่าจากหน้าฟอร์ม Dashboard กลับเข้ามาบันทึกใน Object
+            siteData.site_title = document.getElementById('inp-site-title').value;
+            siteData.site_hero_title = document.getElementById('inp-hero-title').value;
+            siteData.site_hero_subtitle = document.getElementById('inp-hero-subtitle').value;
+            siteData.news_1_title = document.getElementById('inp-news-1').value;
+            siteData.contact_address = document.getElementById('inp-contact-address').value;
+            siteData.contact_phone = document.getElementById('inp-contact-phone').value;
+            siteData.about_history = document.getElementById('inp-about-history').value;
+            siteData.about_vision = document.getElementById('inp-about-vision').value;
+            siteData.exec_director_name = document.getElementById('inp-exec-director').value;
+
+            // บันทึกลง LocalStorage ถาวร
+            localStorage.setItem('lomkao_hospital_data', JSON.stringify(siteData));
+            
+            // สั่งอัปเดตอักษรหน้าเว็บทันที
+            applyDataToDOM();
+            
+            alert('🎉 บันทึกการเปลี่ยนแปลงข้อมูลหน้าเว็บไซต์สำเร็จ!');
+            navigateTo('home');
+        }
+
+        // นัดหมายแบบจำลอง
+        function handleMockAppointment(e) {
+            e.preventDefault();
+            alert('📝 ส่งข้อมูลขอนัดหมายแพทย์สำเร็จ! ระบบทำการจำลองคิวส่งเรื่องไปยังศูนย์เวชระเบียนเรียบร้อยแล้ว');
+            e.target.reset();
+        }
+
+        // เริ่มทำงานเมื่อเปิดหน้าจอ
+        window.onload = initSite;
+    </script>
+</body>
+</html>

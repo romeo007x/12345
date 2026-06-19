@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบนัดหมายออนไลน์ - โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans Thai', sans-serif;
+            background-color: #f4f7fa;
+        }
+        .form-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center h-16 md:h-20">
+            <a href="index.html" class="flex items-center space-x-2 md:space-x-3">
+                <img src="https://img2.pic.in.th/logo_lomkao2-no-BG.png" alt="Logo" class="h-10 w-10 md:h-14 md:w-14 object-contain flex-shrink-0">
+                <div>
+                    <h1 class="text-[#1e3a8a] font-bold text-xs sm:text-sm md:text-lg leading-tight">โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า</h1>
+                    <p class="text-[9px] sm:text-[10px] md:text-xs text-gray-500 uppercase tracking-wider">LOMKAO CROWN PRINCE HOSPITAL</p>
+                </div>
+            </a>
+            <nav class="hidden lg:flex space-x-5 xl:space-x-7 text-sm font-medium text-gray-700">
+                <a href="index.html" class="hover:text-[#1e3a8a] transition">หน้าแรก</a>
+                <a href="#" class="hover:text-[#1e3a8a] transition">เกี่ยวกับโรงพยาบาล</a>
+                <a href="#" class="hover:text-[#1e3a8a] transition">บริการ</a>
+                <a href="#" class="text-[#1e3a8a] border-b-2 border-[#1e3a8a] pb-1">สำหรับผู้รับบริการ</a>
+                <a href="#" class="hover:text-[#1e3a8a] transition">ข่าวสาร</a>
+                <a href="#" class="hover:text-[#1e3a8a] transition">ติดต่อเรา</a>
+            </nav>
+            <div class="flex items-center space-x-2 md:space-x-3">
+                <select class="border border-gray-300 rounded px-1 py-0.5 text-xs bg-white outline-none cursor-pointer">
+                    <option>TH</option>
+                    <option>EN</option>
+                </select>
+                <button class="block lg:hidden text-gray-600 text-xl p-2 focus:outline-none" onclick="toggleMenu()">
+                    <i id="menu-icon" class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 shadow-inner px-4 py-3 space-y-1 text-sm font-medium text-gray-700">
+            <a href="#" class="block py-2.5 px-3 hover:bg-gray-50 rounded-lg transition">หน้าแรก</a>
+            <a href="#" class="block py-2.5 px-3 hover:bg-gray-50 rounded-lg transition">เกี่ยวกับโรงพยาบาล</a>
+            <a href="#" class="block py-2.5 px-3 hover:bg-gray-50 rounded-lg transition">บริการ</a>
+            <a href="#" class="block py-2.5 px-3 bg-blue-50 text-[#1e3a8a] rounded-lg">สำหรับผู้รับบริการ</a>
+            <a href="#" class="block py-2.5 px-3 hover:bg-gray-50 rounded-lg transition">ข่าวสาร</a>
+            <a href="#" class="block py-2.5 px-3 hover:bg-gray-50 rounded-lg transition">ติดต่อเรา</a>
+        </div>
+    </header>
+
+    <div class="form-gradient text-white py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mb-1">ระบบนัดหมายแพทย์ออนไลน์</h2>
+                <p class="text-xs sm:text-sm text-blue-100 font-light">กรุณากรอกข้อมูลให้ครบถ้วนเพื่อความสะดวกรวดเร็วในการรับบริการ</p>
+            </div>
+            <div class="text-xs sm:text-sm bg-white/10 px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm">
+                <i class="fas fa-clock mr-1.5 text-green-300"></i>เปิดให้บริการนัดหมาย 24 ชั่วโมง
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <div class="col-span-1 lg:col-span-8">
+            <form id="appointmentForm" onsubmit="handleSubmit(event)" class="bg-white rounded-2xl shadow-sm p-4 sm:p-6 md:p-8 border border-gray-100 space-y-6">
+                
+                <div>
+                    <h3 class="text-[#1e3a8a] font-bold text-sm sm:text-base border-b border-gray-100 pb-2 mb-4 flex items-center">
+                        <i class="fas fa-user-circle text-blue-600 mr-2 text-lg"></i> 1. ข้อมูลผู้ประจำตัวผู้ป่วย
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">เลขประจำตัวประชาชน / พาสปอร์ต *</label>
+                            <input type="text" required placeholder="เลข 13 หลัก" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">เลขบัตรประจำตัวผู้ป่วย (HN) <span class="text-gray-400 text-xs">(ถ้ามี)</span></label>
+                            <input type="text" placeholder="เช่น 66-XXXXX" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">ชื่อจริง *</label>
+                            <input type="text" required placeholder="ไม่ต้องระบุคำนำหน้า" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">นามสกุล *</label>
+                            <input type="text" required placeholder="นามสกุลจริง" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">เบอร์โทรศัพท์ติดต่อ *</label>
+                            <input type="tel" required placeholder="กรอกเฉพาะตัวเลข" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">วัน/เดือน/ปี เกิด *</label>
+                            <input type="date" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-[#1e3a8a] font-bold text-sm sm:text-base border-b border-gray-100 pb-2 mb-4 flex items-center">
+                        <i class="fas fa-hospital-user text-blue-600 mr-2 text-lg"></i> 2. รายละเอียดการนัดหมาย
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">เลือกคลินิก / แผนกวิชาการแพทย์ *</label>
+                            <select required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none bg-white cursor-pointer transition">
+                                <option value="">-- กรุณาเลือกคลินิก --</option>
+                                <option>คลินิกอายุรกรรมทั่วไป</option>
+                                <option>คลินิกกุมารเวชกรรม (โรคเด็ก)</option>
+                                <option>คลินิกศัลยกรรมกระดูกและข้อ</option>
+                                <option>คลินิกสูติ-นรีเวชกรรม</option>
+                                <option>คลินิกจักษุวิทยา (ตา)</option>
+                                <option>คลินิกทันตกรรม</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">เลือกแพทย์ <span class="text-gray-400 text-xs">(หากไม่ระบุจะเลือกแพทย์เวรประจำวัน)</span></label>
+                            <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none bg-white cursor-pointer transition">
+                                <option value="">ไม่ระบุเจาะจงแพทย์</option>
+                                <option>นพ. สมชาย รักดี (อายุรแพทย์)</option>
+                                <option>พญ. สมศรี มีสุข (กุมารแพทย์)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">วันที่ต้องการนัดหมาย *</label>
+                            <input type="date" required class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">ช่วงเวลาที่สะดวก *</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="border border-gray-200 rounded-lg p-2.5 flex items-center justify-center space-x-2 cursor-pointer hover:bg-blue-50 transition">
+                                    <input type="radio" name="time_slot" required value="ช่วงเช้า (08:00 - 12:00)" class="text-blue-600">
+                                    <span class="text-xs sm:text-sm font-medium text-gray-700">08:00 - 12:00</span>
+                                </label>
+                                <label class="border border-gray-200 rounded-lg p-2.5 flex items-center justify-center space-x-2 cursor-pointer hover:bg-blue-50 transition">
+                                    <input type="radio" name="time_slot" value="ช่วงบ่าย (13:00 - 16:00)" class="text-blue-600">
+                                    <span class="text-xs sm:text-sm font-medium text-gray-700">13:00 - 16:00</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-[#1e3a8a] font-bold text-sm sm:text-base border-b border-gray-100 pb-2 mb-4 flex items-center">
+                        <i class="fas fa-notes-medical text-blue-600 mr-2 text-lg"></i> 3. อาการเบื้องต้นและเอกสาร
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">ระบุอาการเบื้องต้น หรือสาเหตุที่นัดหมาย *</label>
+                            <textarea required rows="3" placeholder="เช่น ปวดท้องต่อเนื่องมา 3 วัน, มาตรวจตามนัดปกติ, ต้องการพบแพทย์เรื่อง..." class="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">แนบรูปถ่ายใบส่งตัว / ประวัติการรักษาเก่า <span class="text-gray-400 text-xs">(ถ้ามีไฟล์ PDF, JPG, PNG)</span></label>
+                            <input type="file" class="w-full text-xs sm:text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-gray-100 flex flex-col sm:flex-row gap-3 justify-end">
+                    <button type="button" onclick="window.history.back()" class="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium text-xs sm:text-sm hover:bg-gray-50 transition text-center">ยกเลิก</button>
+                    <button type="submit" class="px-8 py-2.5 bg-[#059669] hover:bg-green-700 text-white font-medium text-xs sm:text-sm rounded-lg shadow-md transition text-center">ยืนยันการลงทะเบียนนัดหมาย</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-span-1 lg:col-span-4 space-y-6">
+            
+            <section class="bg-white rounded-2xl shadow-sm p-4 sm:p-6 border border-gray-100">
+                <h3 class="text-[#1e3a8a] text-sm sm:text-base font-bold mb-3 flex items-center">
+                    <i class="fas fa-info-circle text-yellow-500 mr-2"></i> คำแนะนำการเข้ารับบริการ
+                </h3>
+                <ul class="text-xs sm:text-sm text-gray-600 space-y-2.5 list-disc pl-4 leading-relaxed">
+                    <li>กรุณานัดหมายล่วงหน้าอย่างน้อย <strong class="text-gray-900">2-3 วันทำการ</strong></li>
+                    <li>เจ้าหน้าที่จะตรวจสอบข้อมูลและ <strong class="text-[#1e3a8a]">ส่งข้อความ SMS หรือโทรยืนยัน</strong> วันเวลาที่แน่นอนอีกครั้งภายใน 24 ชม.</li>
+                    <li>ในวันนัดหมาย กรุณามาถึงก่อนเวลานัด <strong class="text-gray-900">15-30 นาที</strong> เพื่อทำประวัติและวัดความดันเบื้องต้น</li>
+                    <li>สิ่งที่ต้องนำมาด้วย: <span class="text-green-700 font-medium">บัตรประชาชนตัวจริง</span>, บัตร HN ของโรงพยาบาล (ถ้ามี), และยารักษาโรคประจำตัวที่กินอยู่ประจำ</li>
+                </ul>
+            </section>
+
+            <section class="bg-red-50 border border-red-100 rounded-2xl p-4 sm:p-6 text-center sm:text-left">
+                <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-2 sm:space-y-0 sm:space-x-3">
+                    <div class="text-red-600 text-2xl"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div>
+                        <h4 class="text-red-800 font-bold text-xs sm:text-sm">กรณีอุบัติเหตุ หรือเจ็บป่วยฉุกเฉิน</h4>
+                        <p class="text-red-700 text-xs mt-1 leading-normal">ระบบนี้ไม่รองรับกรณีฉุกเฉินเร่งด่วน หากผู้ป่วยมีอาการวิกฤต กรุณาติดต่อสายด่วนอุบัติเหตุได้ตลอด 24 ชั่วโมง</p>
+                        <a href="tel:1669" class="inline-flex items-center bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-4 py-1.5 rounded-full mt-3 shadow-sm transition">
+                            <i class="fas fa-phone-alt mr-1.5 animate-bounce"></i> โทรสายด่วน 1669
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="successModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 backdrop-blur-xs">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl border border-gray-100 scale-95 transition-all duration-300">
+            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-1">ส่งข้อมูลนัดหมายสำเร็จ!</h3>
+            <p class="text-xs sm:text-sm text-gray-500 mb-5 leading-normal">ระบบได้รับข้อมูลของท่านเรียบร้อยแล้ว เจ้าหน้าที่จะดำเนินการตรวจสอบและติดต่อกลับเพื่อยืนยันคิวนัดหมายโดยเร็วที่สุด</p>
+            <button onclick="closeModal()" class="w-full py-2 bg-[#1e3a8a] hover:bg-blue-800 text-white font-medium text-xs sm:text-sm rounded-lg transition">
+                รับทราบและกลับหน้าหลัก
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-[#1e3a8a] text-white py-4 mt-12 text-center border-t border-blue-900">
+        <p class="text-[10px] sm:text-xs">© 2026 โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // เปิด-ปิดเมนูบนหน้าจอมือถือ
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            icon.className = menu.classList.contains('hidden') ? 'fas fa-bars' : 'fas fa-times';
+        }
+
+        // จำลองการกดส่งฟอร์มแล้วแสดง Popup สำเร็จ
+        function handleSubmit(event) {
+            event.preventDefault(); // ป้องกันหน้าเว็บรีเฟรช
+            const modal = document.getElementById('successModal');
+            modal.classList.remove('hidden'); // แสดง Modal ความสำเร็จ
+        }
+
+        // ปิด Popup แจ้งเตือน
+        function closeModal() {
+            const modal = document.getElementById('successModal');
+            modal.classList.add('hidden');
+            document.getElementById('appointmentForm').reset(); // ล้างข้อมูลในฟอร์มออกทั้งหมด
+        }
+    </script>
+</body>
+</html>

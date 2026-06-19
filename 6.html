@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#cce5ff",
+                        "on-primary-container": "#7aa5cc",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#8cf3f3",
+                        "primary-fixed-dim": "#a0cbf3",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#003b5c",
+                        "on-tertiary-fixed": "#2f1500",
+                        "background": "#f8f9fa",
+                        "surface-tint": "#366285",
+                        "on-secondary-container": "#007070",
+                        "tertiary": "#391b00",
+                        "on-surface": "#191c1d",
+                        "on-primary-fixed": "#001d31",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "surface-variant": "#e1e3e4",
+                        "surface": "#f8f9fa",
+                        "secondary-fixed-dim": "#6fd7d6",
+                        "on-surface-variant": "#42474e",
+                        "tertiary-fixed-dim": "#fcb882",
+                        "outline": "#72787e",
+                        "surface-container-low": "#f3f4f5",
+                        "secondary": "#006a6a",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-background": "#191c1d",
+                        "primary": "#00253b",
+                        "inverse-on-surface": "#f0f1f2",
+                        "surface-dim": "#d9dadb",
+                        "surface-container-high": "#e7e8e9",
+                        "on-primary-fixed-variant": "#1a4a6c",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#f8f9fa",
+                        "secondary-container": "#8cf3f3",
+                        "on-tertiary-container": "#d29460",
+                        "tertiary-container": "#572d02",
+                        "on-tertiary-fixed-variant": "#693c10",
+                        "inverse-surface": "#2e3132",
+                        "on-secondary-fixed": "#002020",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#a0cbf3",
+                        "outline-variant": "#c2c7ce",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#ffdcc3",
+                        "surface-container": "#edeeef"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "stack-md": "16px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Public Sans"],
+                        "display-lg": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "headline-md": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"],
+                        "body-sm": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "label-md": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .filled-icon { font-variation-settings: 'FILL' 1; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-desktop h-16 z-50 bg-white border-b border-outline-variant fixed top-0">
+<div class="flex items-center gap-stack-md">
+<button class="material-symbols-outlined text-primary hover:bg-surface-container transition-colors p-2 rounded-full">menu</button>
+<span class="font-headline-md text-headline-md font-bold text-primary">MedResearch Portal</span>
+</div>
+<div class="flex items-center gap-stack-lg">
+<nav class="hidden lg:flex items-center gap-stack-lg">
+<a class="text-on-surface font-label-md hover:text-primary transition-colors border-b-2 border-primary pb-1" href="#">Research Library</a>
+<a class="text-on-surface-variant font-label-md hover:text-primary transition-colors pb-1" href="#">My Works</a>
+<a class="text-on-surface-variant font-label-md hover:text-primary transition-colors pb-1" href="#">Submissions</a>
+</nav>
+<div class="flex items-center gap-stack-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full cursor-pointer">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full cursor-pointer">help_outline</button>
+<div class="h-9 w-9 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-outline-variant">
+<img alt="Physician profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBf2LodveKKaauX2Y0vaeAbMZaqFqNFh8A2s5SQibODEW3KmVNppl3E_L4LwKgIJI-iPDST6A5OOGi6-b23eUSX6stCxnTX5-O5LRTAwkpb5JCEA0fjiU1Ewb9iXH2C9Pts2EsQyA24tB-ACG4wbVjjR-SPMPkdpDid2VIKGInCJm_rrr4yQcXUX2YLgVnG31KHMA-iNUqOX3_xafCMj129mTqK05wcoxqv6pHcbZaCqRlv2WjwBGabIdVdOZklcddZ-WU3z-qJdhka"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 pt-16">
+<!-- Content Area - No Sidebar, Centralized -->
+<main class="flex-1 max-w-[1200px] mx-auto w-full px-margin-desktop py-stack-lg">
+<!-- Quick Access Authors (Avatar Circles) -->
+<section class="mb-stack-lg">
+<div class="flex items-center justify-between mb-stack-sm">
+<h2 class="font-headline-sm text-primary">Quick Access Authors</h2>
+<a class="text-label-md text-primary font-bold hover:underline" href="#">View All</a>
+</div>
+<div class="flex gap-stack-md overflow-x-auto no-scrollbar py-2">
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<div class="w-16 h-16 rounded-full bg-primary-fixed border-2 border-transparent group-hover:border-primary transition-all flex items-center justify-center text-headline-sm font-bold text-on-primary-fixed">SJ</div>
+<span class="text-label-md font-medium text-center truncate w-20">Dr. Jenkins</span>
+</div>
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<div class="w-16 h-16 rounded-full bg-secondary-fixed border-2 border-transparent group-hover:border-primary transition-all flex items-center justify-center text-headline-sm font-bold text-on-secondary-fixed">RC</div>
+<span class="text-label-md font-medium text-center truncate w-20">Dr. Chen</span>
+</div>
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<div class="w-16 h-16 rounded-full bg-tertiary-fixed border-2 border-transparent group-hover:border-primary transition-all flex items-center justify-center text-headline-sm font-bold text-on-tertiary-fixed">EM</div>
+<span class="text-label-md font-medium text-center truncate w-20">Prof. Moretti</span>
+</div>
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<div class="w-16 h-16 rounded-full bg-primary-container border-2 border-transparent group-hover:border-primary transition-all flex items-center justify-center text-headline-sm font-bold text-white">SM</div>
+<span class="text-label-md font-medium text-center truncate w-20">Dr. Miller</span>
+</div>
+<div class="flex flex-col items-center gap-1 group cursor-pointer">
+<div class="w-16 h-16 rounded-full bg-surface-variant border-2 border-transparent group-hover:border-primary transition-all flex items-center justify-center text-headline-sm font-bold text-on-surface-variant">JR</div>
+<span class="text-label-md font-medium text-center truncate w-20">Jameson R.</span>
+</div>
+</div>
+</section>
+<!-- Search & Filters (Mobile Inspired Stacked Design) -->
+<section class="bg-surface-container-low p-stack-md rounded-xl border border-outline-variant mb-stack-lg">
+<div class="flex flex-col md:flex-row gap-stack-md">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-white border border-outline-variant rounded-full py-3 pl-10 pr-4 focus:ring-2 focus:ring-primary focus:border-primary outline-none text-body-md" placeholder="Search by title or keywords..." type="text"/>
+</div>
+<div class="relative md:w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">person_search</span>
+<select class="w-full bg-white border border-outline-variant rounded-full py-3 pl-10 pr-10 focus:ring-2 focus:ring-primary focus:border-primary outline-none text-body-md appearance-none">
+<option>Search by Doctor</option>
+<option>Dr. Sarah Jenkins</option>
+<option>Dr. Robert Chen</option>
+<option>Prof. Elena Moretti</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+<button class="bg-primary text-white px-8 py-3 rounded-full font-bold hover:opacity-90 transition-opacity">Search</button>
+</div>
+<div class="flex flex-wrap gap-2 mt-stack-md">
+<button class="bg-primary-container text-on-primary-container px-4 py-1.5 rounded-full text-label-md font-bold">All Research</button>
+<button class="bg-white text-on-surface-variant border border-outline-variant px-4 py-1.5 rounded-full text-label-md hover:bg-surface-variant transition-colors">Clinical Medicine</button>
+<button class="bg-white text-on-surface-variant border border-outline-variant px-4 py-1.5 rounded-full text-label-md hover:bg-surface-variant transition-colors">Public Health</button>
+<button class="bg-white text-on-surface-variant border border-outline-variant px-4 py-1.5 rounded-full text-label-md hover:bg-surface-variant transition-colors">Bioethics</button>
+<button class="bg-white text-on-surface-variant border border-outline-variant px-4 py-1.5 rounded-full text-label-md hover:bg-surface-variant transition-colors">Pharmacology</button>
+</div>
+</section>
+<!-- Library Heading -->
+<div class="mb-stack-md flex justify-between items-end">
+<div>
+<h1 class="font-headline-lg text-primary">Public Research Library</h1>
+<p class="text-on-surface-variant font-body-md">248 papers available in your institution.</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-1 text-label-md font-bold text-primary px-3 py-1.5 rounded hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">sort</span> Sort: Newest
+                    </button>
+</div>
+</div>
+<!-- Research List -->
+<div class="grid grid-cols-1 gap-stack-md">
+<!-- Research Card 1 -->
+<article class="bg-white border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col">
+<div class="p-stack-md flex flex-col md:flex-row gap-stack-md">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-[#dcfce7] text-[#166534] px-2 py-0.5 rounded text-[11px] font-bold uppercase">Peer Reviewed</span>
+<span class="text-on-surface-variant text-[11px]">Oct 24, 2024</span>
+</div>
+<h3 class="font-headline-sm text-primary mb-2">Impact of mRNA Vaccines on Long-Term Respiratory Resilience: A Longitudinal Multi-Center Study</h3>
+<p class="text-on-surface-variant font-body-sm italic mb-4">Sarah Jenkins, Robert Chen, et al.</p>
+<p class="text-on-surface font-body-sm line-clamp-2">
+                                This study investigates the pulmonary recovery rates of 15,000 patients over a 24-month period following mRNA vaccination sequences. Findings indicate significant improvement in resilience...
+                            </p>
+</div>
+<div class="md:w-48 flex flex-col justify-between border-t md:border-t-0 md:border-l border-outline-variant pt-stack-md md:pt-0 md:pl-stack-md">
+<div class="space-y-2">
+<div class="flex items-center gap-2 text-on-surface-variant text-label-md">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+                                    2.4k views
+                                </div>
+<div class="flex items-center gap-2 text-on-surface-variant text-label-md">
+<span class="material-symbols-outlined text-[18px]">description</span>
+                                    PDF (4.2 MB)
+                                </div>
+</div>
+<button class="w-full bg-primary text-white py-2.5 rounded-lg font-bold text-label-md hover:bg-opacity-90 transition-all mt-4">Read Full Paper</button>
+</div>
+</div>
+</article>
+<!-- Research Card 2 -->
+<article class="bg-white border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col">
+<div class="p-stack-md flex flex-col md:flex-row gap-stack-md">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-[#dcfce7] text-[#166534] px-2 py-0.5 rounded text-[11px] font-bold uppercase">Peer Reviewed</span>
+<span class="text-on-surface-variant text-[11px]">Aug 12, 2024</span>
+</div>
+<h3 class="font-headline-sm text-primary mb-2">Ethical Implementation of AI-Driven Diagnostics in Rural Community Clinics</h3>
+<p class="text-on-surface-variant font-body-sm italic mb-4">Jameson K. Reed, Sarah T. Miller</p>
+<p class="text-on-surface font-body-sm line-clamp-2">
+                                Exploring the socio-technical barriers to deploying machine learning models in resource-limited environments. This research highlights the necessity of human-in-the-loop validation...
+                            </p>
+</div>
+<div class="md:w-48 flex flex-col justify-between border-t md:border-t-0 md:border-l border-outline-variant pt-stack-md md:pt-0 md:pl-stack-md">
+<div class="space-y-2">
+<div class="flex items-center gap-2 text-on-surface-variant text-label-md">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+                                    1.8k views
+                                </div>
+<div class="flex items-center gap-2 text-on-surface-variant text-label-md">
+<span class="material-symbols-outlined text-[18px]">description</span>
+                                    PDF (2.8 MB)
+                                </div>
+</div>
+<button class="w-full bg-primary text-white py-2.5 rounded-lg font-bold text-label-md hover:bg-opacity-90 transition-all mt-4">Read Full Paper</button>
+</div>
+</div>
+</article>
+<!-- Research Card 3 -->
+<article class="bg-white border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all flex flex-col">
+<div class="p-stack-md flex flex-col md:flex-row gap-stack-md">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-[#fef9c3] text-[#854d0e] px-2 py-0.5 rounded text-[11px] font-bold uppercase">Pending Review</span>
+<span class="text-on-surface-variant text-[11px]">Submitted Nov 05</span>
+</div>
+<h3 class="font-headline-sm text-primary mb-2">Comparative Analysis of Pediatric Nutrition in Urban vs. Suburban Primary Schools</h3>
+<p class="text-on-surface-variant font-body-sm italic mb-4">Dietary Research Collective</p>
+<p class="text-on-surface font-body-sm line-clamp-2">
+                                A comprehensive data analysis of caloric intake and micro-nutrient density in state-provided school meals. This preliminary report suggests significant disparities...
+                            </p>
+</div>
+<div class="md:w-48 flex flex-col justify-between border-t md:border-t-0 md:border-l border-outline-variant pt-stack-md md:pt-0 md:pl-stack-md">
+<div class="space-y-2">
+<div class="flex items-center gap-2 text-on-surface-variant text-label-md">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+                                    432 views
+                                </div>
+<div class="flex items-center gap-2 text-on-surface-variant text-label-md">
+<span class="material-symbols-outlined text-[18px]">table_chart</span>
+                                    DATA (15 MB)
+                                </div>
+</div>
+<button class="w-full border-2 border-primary text-primary py-2.5 rounded-lg font-bold text-label-md hover:bg-primary-container transition-all mt-4">Preview Draft</button>
+</div>
+</div>
+</article>
+</div>
+<!-- Pagination -->
+<div class="mt-stack-lg flex justify-center items-center gap-2">
+<button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-container transition-colors disabled:opacity-50">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 bg-primary text-white rounded-lg font-bold">1</button>
+<button class="w-10 h-10 border border-outline-variant text-on-surface rounded-lg font-medium hover:bg-surface-container transition-colors">2</button>
+<button class="w-10 h-10 border border-outline-variant text-on-surface rounded-lg font-medium hover:bg-surface-container transition-colors">3</button>
+<span class="px-2 text-on-surface-variant">...</span>
+<button class="w-10 h-10 border border-outline-variant text-on-surface rounded-lg font-medium hover:bg-surface-container transition-colors">12</button>
+<button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-margin-desktop bg-white border-t border-outline-variant mt-stack-lg">
+<div class="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center gap-stack-md">
+<div>
+<span class="font-headline-sm text-primary">MedResearch Portal</span>
+<p class="text-body-sm text-on-surface-variant mt-1">© 2024 Institutional Medical Research Division. All rights reserved.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-stack-md">
+<a class="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Ethical Guidelines</a>
+<a class="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Support</a>
+</div>
+</div>
+</footer>
+<script>
+        // Enhanced interactions for the cards
+        document.querySelectorAll('article').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('shadow-xl');
+                card.style.transform = 'translateY(-2px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('shadow-xl');
+                card.style.transform = 'translateY(0)';
+            });
+            card.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+    </script>
+</body></html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="light" lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>เข้าสู่ระบบ | MedResearch Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#693c10",
+                        "surface-bright": "#f8f9fa",
+                        "on-primary-fixed": "#001d31",
+                        "on-secondary-container": "#007070",
+                        "outline-variant": "#c2c7ce",
+                        "tertiary": "#391b00",
+                        "surface-dim": "#d9dadb",
+                        "inverse-primary": "#a0cbf3",
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-surface-variant": "#42474e",
+                        "on-primary-container": "#7aa5cc",
+                        "outline": "#72787e",
+                        "tertiary-fixed-dim": "#fcb882",
+                        "on-tertiary-container": "#d29460",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2e3132",
+                        "on-tertiary-fixed": "#2f1500",
+                        "primary-fixed-dim": "#a0cbf3",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#002020",
+                        "secondary-container": "#8cf3f3",
+                        "on-surface": "#191c1d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "surface": "#f8f9fa",
+                        "surface-container-high": "#e7e8e9",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#004f4f",
+                        "surface-tint": "#366285",
+                        "on-background": "#191c1d",
+                        "secondary-fixed": "#8cf3f3",
+                        "on-primary-fixed-variant": "#1a4a6c",
+                        "primary": "#00253b",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#ffdcc3",
+                        "error": "#ba1a1a",
+                        "background": "#f8f9fa",
+                        "secondary-fixed-dim": "#6fd7d6",
+                        "surface-container-highest": "#e1e3e4",
+                        "secondary": "#006a6a",
+                        "primary-container": "#003b5c",
+                        "surface-container-low": "#f3f4f5",
+                        "surface-container": "#edeeef",
+                        "tertiary-container": "#572d02",
+                        "primary-fixed": "#cce5ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "stack-lg": "32px",
+                        "container-max": "1440px",
+                        "stack-sm": "8px",
+                        "margin-desktop": "48px",
+                        "unit": "4px",
+                        "stack-md": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "body-sm": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"],
+                        "label-md": ["Public Sans"],
+                        "display-lg": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .medical-gradient {
+            background: linear-gradient(135deg, rgba(0, 37, 59, 0.9) 0%, rgba(0, 106, 106, 0.7) 100%);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex overflow-hidden">
+<!-- Left Side: Login Form (Fixed Grid Approach) -->
+<main class="w-full md:w-5/12 lg:w-4/12 flex flex-col justify-center px-margin-mobile md:px-margin-desktop bg-surface z-10 border-r border-outline-variant">
+<!-- Brand Header -->
+<div class="mb-stack-lg animate-fade-in">
+<div class="flex items-center gap-stack-sm mb-unit">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="medical_services">medical_services</span>
+<h1 class="font-headline-md text-headline-md text-primary">MedResearch Portal</h1>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Institutional Medical Research Division</p>
+</div>
+<!-- Login Card -->
+<section class="flex flex-col gap-stack-md">
+<header>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-unit">เข้าสู่ระบบ</h2>
+<p class="font-body-sm text-body-sm text-outline">กรุณาเข้าสู่ระบบด้วยบัญชีสถาบันของคุณเพื่อดำเนินการต่อ</p>
+</header>
+<form class="flex flex-col gap-stack-md mt-stack-md">
+<!-- Institutional Email -->
+<div class="flex flex-col gap-unit">
+<label class="font-label-md text-label-md text-on-surface-variant" for="email">อีเมลสถาบัน / ชื่อผู้ใช้งาน</label>
+<input class="w-full h-12 px-4 bg-surface-container-lowest border border-outline-variant rounded-none focus:ring-0 focus:border-primary border-b-2 transition-all outline-none font-body-md text-body-md" id="email" placeholder="example@hospital.ac.th" type="text"/>
+</div>
+<!-- Password -->
+<div class="flex flex-col gap-unit">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface-variant" for="password">รหัสผ่าน</label>
+<a class="font-label-md text-label-md text-secondary hover:underline" href="#">ลืมรหัสผ่าน?</a>
+</div>
+<div class="relative">
+<input class="w-full h-12 px-4 bg-surface-container-lowest border border-outline-variant rounded-none focus:ring-0 focus:border-primary border-b-2 transition-all outline-none font-body-md text-body-md" id="password" placeholder="••••••••" type="password"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline cursor-pointer hover:text-on-surface-variant" data-icon="visibility">visibility</span>
+</div>
+</div>
+<!-- Keep logged in -->
+<div class="flex items-center gap-stack-sm">
+<input class="w-4 h-4 rounded-none border-outline-variant text-primary focus:ring-primary" id="remember" type="checkbox"/>
+<label class="font-body-sm text-body-sm text-on-surface-variant select-none" for="remember">ให้ฉันอยู่ในระบบตลอดเวลา</label>
+</div>
+<!-- Primary Action -->
+<button class="mt-stack-sm w-full h-12 bg-primary text-on-primary font-headline-sm text-headline-sm hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-stack-sm" type="button">
+                    ลงชื่อเข้าใช้
+                    <span class="material-symbols-outlined" data-icon="login">login</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="flex items-center gap-stack-md my-stack-sm">
+<hr class="flex-grow border-outline-variant"/>
+<span class="font-label-md text-label-md text-outline">หรือ</span>
+<hr class="flex-grow border-outline-variant"/>
+</div>
+<!-- SSO Action -->
+<button class="w-full h-12 border border-secondary text-secondary font-headline-sm text-headline-sm hover:bg-secondary-container transition-colors active:scale-[0.98] flex items-center justify-center gap-stack-sm" type="button">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+                เข้าสู่ระบบด้วย Institutional SSO
+            </button>
+</section>
+<!-- Footer Policy Links -->
+<footer class="mt-stack-lg pt-stack-lg border-t border-outline-variant">
+<div class="flex flex-wrap gap-x-stack-md gap-y-stack-sm">
+<a class="font-label-md text-label-md text-outline hover:text-primary transition-colors" href="#">นโยบายความเป็นส่วนตัว</a>
+<a class="font-label-md text-label-md text-outline hover:text-primary transition-colors" href="#">ข้อกำหนดการใช้งาน</a>
+<a class="font-label-md text-label-md text-outline hover:text-primary transition-colors" href="#">แนวทางจริยธรรม</a>
+</div>
+<p class="mt-stack-sm font-label-md text-label-md text-outline-variant opacity-70">
+                © 2024 Institutional Medical Research Division.
+            </p>
+</footer>
+</main>
+<!-- Right Side: Visual Context -->
+<aside class="hidden md:flex flex-grow relative overflow-hidden bg-primary-container">
+<!-- Background Image with prompt -->
+<img alt="Medical Lab" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40" data-alt="A high-end modern medical research laboratory featuring a high-precision electron microscope in the foreground. The lighting is sterile and cool-toned with soft navy blue ambient glows, reflecting a professional and academic environment. Researchers in white lab coats are visible in the soft-focus background, working with advanced clinical equipment. The overall aesthetic is clean, secure, and technologically advanced, aligned with a premium institutional portal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCu7UQQu33ZyXPVoA0RR9wFOfVYWIRP8jnynZj8t7pszS16itoBn3_U0LQvM8Uvh1F8fM9SbK0pD26oVOghxQ7RXXFC_f1y25w1-s7c4J9E_Ns4x-m1pmDGQkAAdrNZoUzqZ3cmONlgWiv1v9DWotDwjl7DA10xe96qzwjRoOTw2lgJp-2VSIfywG9xkfkQnutGhtuoVTpdBQsUYvP96G962IRLpcIRpuJHQc1dVcQCh0KzpDPOFG0pVTKGuX5omwqoIksXL_5L5bBn"/>
+<!-- Overlay Content -->
+<div class="absolute inset-0 medical-gradient"></div>
+<div class="relative z-20 flex flex-col justify-end p-margin-desktop h-full max-w-2xl">
+<div class="bg-primary/20 backdrop-blur-md p-stack-lg border-l-4 border-secondary-container">
+<h3 class="font-display-lg text-display-lg text-on-primary mb-stack-md leading-tight">
+                    ศูนย์รวมงานวิจัยทาง<br/>การแพทย์ระดับสูง
+                </h3>
+<p class="font-body-lg text-body-lg text-primary-fixed mb-stack-lg opacity-90">
+                    แพลตฟอร์มที่ปลอดภัยและแม่นยำสำหรับการจัดการข้อมูลงานวิจัย การส่งผลงานทางวิชาการ และการพิจารณาด้านจริยธรรมในมนุษย์ของสถาบัน
+                </p>
+<div class="flex gap-stack-lg">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-secondary-container">1,200+</span>
+<span class="font-label-md text-label-md text-on-primary-fixed opacity-70">งานวิจัยที่ได้รับการอนุมัติ</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-secondary-container">45</span>
+<span class="font-label-md text-label-md text-on-primary-fixed opacity-70">สถาบันในเครือข่าย</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Atmospheric Effects -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-secondary/10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
+</aside>
+<script>
+        // Micro-interaction for password toggle
+        document.querySelector('[data-icon="visibility"]').addEventListener('click', function() {
+            const pwdInput = document.getElementById('password');
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+                this.textContent = 'visibility_off';
+            } else {
+                pwdInput.type = 'password';
+                this.textContent = 'visibility';
+            }
+        });
+
+        // Simple Fade-in Animation
+        window.addEventListener('DOMContentLoaded', () => {
+            const main = document.querySelector('main');
+            main.style.opacity = '0';
+            main.style.transform = 'translateX(-20px)';
+            
+            setTimeout(() => {
+                main.style.transition = 'all 0.6s ease-out';
+                main.style.opacity = '1';
+                main.style.transform = 'translateX(0)';
+            }, 100);
+        });
+    </script>
+</body></html>
