@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ค้นหาแพทย์ - โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans Thai', sans-serif;
+            background-color: #f4f7fa;
+        }
+        /* ซ่อน Scrollbar ของเมนูมือถือ แต่ยังเลื่อนได้ */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden relative flex flex-col min-h-screen">
+
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center h-16 md:h-20">
+            <a href="index.html" class="flex items-center space-x-2 md:space-x-3">
+                <img src="https://img2.pic.in.th/logo_lomkao2-no-BG.png" alt="โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า โลโก้" class="h-10 w-10 md:h-12 md:w-12 object-contain flex-shrink-0">
+                <div>
+                    <h1 class="text-[#1e3a8a] font-bold text-xs sm:text-sm md:text-base leading-tight">โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า</h1>
+                    <p class="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider mt-0.5">LOMKAO CROWN PRINCE HOSPITAL</p>
+                </div>
+            </a>
+
+            <nav class="hidden lg:flex items-center space-x-1 xl:space-x-2 text-sm font-medium text-gray-700 h-full">
+                <a href="index.html#home" class="px-3 py-2 hover:text-[#1e3a8a] transition">หน้าแรก</a>
+                
+                <div class="relative group h-full flex items-center">
+                    <button class="px-3 py-2 hover:text-[#1e3a8a] transition flex items-center gap-1 cursor-pointer">
+                        เกี่ยวกับเรา <i class="fas fa-chevron-down text-[10px] mt-0.5 transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute top-full left-0 bg-white shadow-lg rounded-b-lg overflow-hidden hidden group-hover:block min-w-[220px] border-t-2 border-[#1e3a8a]">
+                        <a href="index.html#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">ประวัติความเป็นมา</a>
+                        <a href="index.html#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">วิสัยทัศน์ และ พันธกิจ</a>
+                        <a href="index.html#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">โครงสร้างผู้บริหาร</a>
+                        <a href="index.html#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a]">คณะกรรมการบริหาร</a>
+                    </div>
+                </div>
+
+                <div class="relative group h-full flex items-center">
+                    <button class="px-3 py-2 hover:text-[#1e3a8a] text-[#1e3a8a] font-semibold border-b-2 border-[#1e3a8a] flex items-center gap-1 cursor-pointer">
+                        บริการ <i class="fas fa-chevron-down text-[10px] mt-0.5 transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute top-full left-0 bg-white shadow-lg rounded-b-lg overflow-hidden hidden group-hover:block min-w-[200px] border-t-2 border-[#1e3a8a]">
+                        <a href="index.html#services" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">ตารางออกตรวจ</a>
+                        <a href="search-doctor.html" class="block px-4 py-3 text-sm text-[#1e3a8a] font-semibold bg-blue-50 border-b border-gray-50">ค้นหาแพทย์/ตารางตรวจ</a>
+                        <a href="index.html#services" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">คลินิกเฉพาะทาง</a>
+                        <a href="index.html#services" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a]">ศูนย์ความเป็นเลิศ</a>
+                    </div>
+                </div>
+
+                <div class="relative group h-full flex items-center">
+                    <button class="px-3 py-2 hover:text-[#1e3a8a] transition flex items-center gap-1 cursor-pointer">
+                        สำหรับผู้รับบริการ <i class="fas fa-chevron-down text-[10px] mt-0.5 transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute top-full left-0 bg-white shadow-lg rounded-b-lg overflow-hidden hidden group-hover:block min-w-[220px] border-t-2 border-[#1e3a8a]">
+                        <a href="index.html#stats" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">ตรวจสอบสิทธิการรักษา</a>
+                        <a href="index.html#stats" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">ขั้นตอนการรับบริการ</a>
+                        <a href="https://lin.ee/RN7ji5w" target="_blank" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a]">นัดหมายแพทย์ล่วงหน้า</a>
+                    </div>
+                </div>
+
+                <div class="relative group h-full flex items-center">
+                    <button class="px-3 py-2 hover:text-[#1e3a8a] transition flex items-center gap-1 cursor-pointer">
+                        ข่าวสาร <i class="fas fa-chevron-down text-[10px] mt-0.5 transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute top-full left-0 bg-white shadow-lg rounded-b-lg overflow-hidden hidden group-hover:block min-w-[200px] border-t-2 border-[#1e3a8a]">
+                        <a href="index.html#news" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">ข่าวประชาสัมพันธ์</a>
+                        <a href="index.html#news" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">ประกาศจัดซื้อจัดจ้าง</a>
+                        <a href="index.html#news" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a]">ประกาศรับสมัครงาน</a>
+                    </div>
+                </div>
+
+                <a href="index.html#contact" class="px-3 py-2 hover:text-[#1e3a8a] transition">ติดต่อเรา</a>
+            </nav>
+
+            <div class="flex items-center space-x-2 md:space-x-3">
+                <button class="text-gray-500 hover:text-[#1e3a8a] p-2 text-sm sm:text-base transition"><i class="fas fa-search"></i></button>
+                <select class="hidden sm:block border border-gray-200 rounded px-1.5 py-1 text-xs font-medium text-gray-600 bg-gray-50 outline-none cursor-pointer hover:bg-gray-100 transition">
+                    <option>TH</option>
+                    <option>EN</option>
+                </select>
+                <button class="block lg:hidden text-gray-700 text-xl p-2 focus:outline-none hover:text-[#1e3a8a] transition" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="menu-backdrop" class="fixed inset-0 bg-black/60 z-40 opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleMenu()"></div>
+
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-[280px] sm:w-[320px] bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="flex items-center justify-between p-4 border-b border-gray-100 bg-white">
+            <div class="flex items-center space-x-2">
+                <img src="https://img2.pic.in.th/logo_lomkao2-no-BG.png" alt="โลโก้" class="h-8 w-8 object-contain">
+                <span class="text-[#1e3a8a] font-bold text-sm">เมนูหลัก</span>
+            </div>
+            <button onclick="toggleMenu()" class="text-gray-400 hover:text-red-500 bg-gray-50 hover:bg-red-50 rounded-full w-8 h-8 flex items-center justify-center transition focus:outline-none">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="flex-1 overflow-y-auto px-3 py-4 space-y-1 text-sm font-medium text-gray-700 no-scrollbar">
+            <a href="index.html#home" class="flex items-center space-x-3 py-3 px-3 hover:bg-gray-50 text-gray-600 rounded-xl">
+                <i class="fas fa-home w-5 text-center"></i><span>หน้าแรก</span>
+            </a>
+
+            <div class="border-b border-gray-50 pb-1">
+                <button onclick="toggleSubmenu('sub-about', 'icon-about')" class="w-full flex items-center justify-between py-3 px-3 hover:bg-gray-50 text-gray-600 rounded-xl transition focus:outline-none">
+                    <div class="flex items-center space-x-3"><i class="fas fa-hospital w-5 text-center"></i><span>เกี่ยวกับเรา</span></div>
+                    <i id="icon-about" class="fas fa-chevron-down text-[10px] transition-transform duration-300 text-gray-400"></i>
+                </button>
+                <div id="sub-about" class="hidden flex-col pl-11 pr-3 py-1 space-y-3 mt-1 text-xs text-gray-500">
+                    <a href="index.html#" class="hover:text-[#1e3a8a] block">ประวัติความเป็นมา</a>
+                    <a href="index.html#" class="hover:text-[#1e3a8a] block">วิสัยทัศน์ และ พันธกิจ</a>
+                    <a href="index.html#" class="hover:text-[#1e3a8a] block">โครงสร้างผู้บริหาร</a>
+                </div>
+            </div>
+
+            <div class="border-b border-gray-50 pb-1">
+                <button onclick="toggleSubmenu('sub-services', 'icon-services')" class="w-full flex items-center justify-between py-3 px-3 bg-blue-50 text-[#1e3a8a] rounded-xl transition focus:outline-none">
+                    <div class="flex items-center space-x-3"><i class="fas fa-stethoscope w-5 text-center"></i><span>บริการของเรา</span></div>
+                    <i id="icon-services" class="fas fa-chevron-down text-[10px] transition-transform duration-300 text-[#1e3a8a]"></i>
+                </button>
+                <div id="sub-services" class="flex flex-col pl-11 pr-3 py-1 space-y-3 mt-1 text-xs text-gray-500">
+                    <a href="index.html#services" class="hover:text-[#1e3a8a] block">ตารางออกตรวจ</a>
+                    <a href="search-doctor.html" class="text-[#1e3a8a] font-bold block">ค้นหาแพทย์/ตารางตรวจ</a>
+                    <a href="index.html#services" class="hover:text-[#1e3a8a] block">คลินิกเฉพาะทาง</a>
+                </div>
+            </div>
+
+            <div class="border-b border-gray-50 pb-1">
+                <button onclick="toggleSubmenu('sub-patient', 'icon-patient')" class="w-full flex items-center justify-between py-3 px-3 hover:bg-gray-50 text-gray-600 rounded-xl transition focus:outline-none">
+                    <div class="flex items-center space-x-3"><i class="fas fa-user-injured w-5 text-center"></i><span>สำหรับผู้รับบริการ</span></div>
+                    <i id="icon-patient" class="fas fa-chevron-down text-[10px] transition-transform duration-300 text-gray-400"></i>
+                </button>
+                <div id="sub-patient" class="hidden flex-col pl-11 pr-3 py-1 space-y-3 mt-1 text-xs text-gray-500">
+                    <a href="index.html#stats" class="hover:text-[#1e3a8a] block">ตรวจสอบสิทธิการรักษา</a>
+                    <a href="index.html#stats" class="hover:text-[#1e3a8a] block">ขั้นตอนการรับบริการ</a>
+                    <a href="https://lin.ee/RN7ji5w" target="_blank" class="hover:text-[#1e3a8a] block">นัดหมายออนไลน์</a>
+                </div>
+            </div>
+
+            <div class="border-b border-gray-50 pb-1">
+                <button onclick="toggleSubmenu('sub-news', 'icon-news')" class="w-full flex items-center justify-between py-3 px-3 hover:bg-gray-50 text-gray-600 rounded-xl transition focus:outline-none">
+                    <div class="flex items-center space-x-3"><i class="fas fa-bullhorn w-5 text-center"></i><span>ข่าวสารและประกาศ</span></div>
+                    <i id="icon-news" class="fas fa-chevron-down text-[10px] transition-transform duration-300 text-gray-400"></i>
+                </button>
+                <div id="sub-news" class="hidden flex-col pl-11 pr-3 py-1 space-y-3 mt-1 text-xs text-gray-500">
+                    <a href="index.html#news" class="hover:text-[#1e3a8a] block">ข่าวประชาสัมพันธ์</a>
+                    <a href="index.html#news" class="hover:text-[#1e3a8a] block">ประกาศจัดซื้อจัดจ้าง</a>
+                    <a href="index.html#news" class="hover:text-[#1e3a8a] block">รับสมัครงาน</a>
+                </div>
+            </div>
+
+            <a href="index.html#contact" class="flex items-center space-x-3 py-3 px-3 hover:bg-gray-50 text-gray-600 hover:text-[#1e3a8a] rounded-xl transition">
+                <i class="fas fa-envelope w-5 text-center"></i><span>ติดต่อเรา</span>
+            </a>
+        </div>
+        
+        <div class="p-4 bg-gray-50 border-t border-gray-100">
+            <div class="flex items-center justify-between bg-white px-3 py-2 rounded-lg border border-gray-200">
+                <span class="text-xs text-gray-500 font-medium"><i class="fas fa-globe mr-2"></i>เปลี่ยนภาษา</span>
+                <select class="bg-transparent text-xs outline-none cursor-pointer text-[#1e3a8a] font-bold">
+                    <option>TH</option>
+                    <option>EN</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-[#1e3a8a] text-white py-8 sm:py-12 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center"></div>
+        <div class="max-w-7xl mx-auto px-4 relative z-10 text-center">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-2">ค้นหาแพทย์และตารางออกตรวจ</h2>
+            <p class="text-blue-200 text-sm sm:text-base">ตรวจสอบตารางเวลาและนัดหมายแพทย์ผู้เชี่ยวชาญเฉพาะทาง</p>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
+        
+        <section class="bg-white rounded-2xl shadow-sm p-4 sm:p-6 border border-gray-100 mb-8 -mt-14 relative z-20">
+            <form action="#" method="GET" onsubmit="event.preventDefault();" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="col-span-1 md:col-span-2">
+                    <label class="block text-xs font-semibold text-gray-600 mb-1.5">ชื่อ-นามสกุล แพทย์</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                        <input type="text" id="search-name" placeholder="ระบุชื่อแพทย์ที่ต้องการค้นหา..." class="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#2563eb] focus:ring-1 focus:ring-[#2563eb] transition">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1.5">แผนก / คลินิก</label>
+                    <select id="select-dept" class="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-700 focus:outline-none focus:border-[#2563eb] bg-white cursor-pointer transition">
+                        <option value="">ทุกแผนก</option>
+                        <option value="med">อายุรกรรม</option>
+                        <option value="ped">กุมารเวชกรรม</option>
+                        <option value="sur">ศัลยกรรม</option>
+                        <option value="obgyn">สูตินรีเวช</option>
+                        <option value="ortho">ศัลยกรรมกระดูกและข้อ</option>
+                    </select>
+                </div>
+
+                <div class="flex items-end">
+                    <button type="button" id="btn-search" class="w-full bg-[#1e40af] hover:bg-blue-800 text-white font-medium py-2.5 rounded-xl transition duration-200 shadow-sm flex justify-center items-center gap-2">
+                        <i class="fas fa-search"></i> ค้นหา
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <div id="doctor-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            
+            <div class="doctor-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition duration-300 group" data-dept="med">
+                <div class="h-48 overflow-hidden relative bg-blue-50">
+                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Doctor" class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-3 right-3 bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded-full shadow-sm">
+                        <i class="fas fa-circle text-[8px] mr-1"></i>ออกตรวจวันนี้
+                    </div>
+                </div>
+                <div class="p-5">
+                    <p class="text-[#2563eb] text-xs font-bold mb-1">แผนกอายุรกรรม</p>
+                    <h3 class="doctor-name text-[#1e3a8a] font-bold text-lg mb-2">นพ. สมชาย ใจดี</h3>
+                    <div class="space-y-1.5 mb-4">
+                        <p class="text-xs text-gray-600 flex items-start gap-2">
+                            <i class="fas fa-graduation-cap text-gray-400 mt-0.5 w-4 text-center"></i>
+                            <span>อายุรศาสตร์ทั่วไป, อายุรศาสตร์โรคหัวใจ</span>
+                        </p>
+                        <p class="text-xs text-gray-600 flex items-start gap-2">
+                            <i class="fas fa-calendar-alt text-gray-400 mt-0.5 w-4 text-center"></i>
+                            <span>จันทร์, พุธ, ศุกร์</span>
+                        </p>
+                        <p class="text-xs text-gray-600 flex items-start gap-2">
+                            <i class="fas fa-clock text-gray-400 mt-0.5 w-4 text-center"></i>
+                            <span>08:30 - 12:00 น.</span>
+                        </p>
+                    </div>
+                    <a href="https://lin.ee/RN7ji5w" target="_blank" class="block text-center w-full bg-blue-50 text-blue-600 hover:bg-[#2563eb] hover:text-white font-medium py-2 rounded-xl text-sm transition duration-200 border border-blue-100 hover:border-[#2563eb]">
+                        นัดหมายแพทย์
+                    </a>
+                </div>
+            </div>
+
+            <div class="doctor-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition duration-300 group" data-dept="ped">
+                <div class="h-48 overflow-hidden relative bg-blue-50">
+                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Doctor" class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-5">
+                    <p class="text-[#2563eb] text-xs font-bold mb-1">แผนกกุมารเวชกรรม</p>
+                    <h3 class="doctor-name text-[#1e3a8a] font-bold text-lg mb-2">พญ. สมหญิง รักเด็ก</h3>
+                    <div class="space-y-1.5 mb-4">
+                        <p class="text-xs text-gray-600 flex items-start gap-2">
+                            <i class="fas fa-graduation-cap text-gray-400 mt-0.5 w-4 text-center"></i>
+                            <span>กุมารเวชศาสตร์ทั่วไป</span>
+                        </p>
+                        <p class="text-xs text-gray-600 flex items-start gap-2">
+                            <i class="fas fa-calendar-alt text-gray-400 mt-0.5 w-4 text-center"></i>
+                            <span>อังคาร, พฤหัสบดี</span>
+                        </p>
+                        <p class="text-xs text-gray-600 flex items-start gap-2">
+                            <i class="fas fa-clock text-gray-400 mt-0.5 w-4 text-center"></i>
+                            <span>08:30 - 16:00 น.</span>
+                        </p>
+                    </div>
+                    <a href="https://lin.ee/RN7ji5w" target="_blank" class="block text-center w-full bg-blue-50 text-blue-600 hover:bg-[#2563eb] hover:text-white font-medium py-2 rounded-xl text-sm transition duration-200 border border-blue-100 hover:border-[#2563eb]">
+                        นัดหมายแพทย์
+                    </a>
+                </div>
+            </div>
+
+            <div class="doctor-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition duration-300 group" data-dept="sur">
+                <div class="h-48 overflow-hidden relative bg-blue-50">
+                    <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Doctor" class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-3 right-3 bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded-full shadow-sm">
+                        <i class="fas fa-circle text-[8px] mr-1"></i>ออกตรวจวันนี้
+                    </div>
+                </div>
+                <div class="p-5">
+                    <p class="text-[#2563eb] text-xs font-bold mb-1">แผนกศัลยกรรม</p>
+                    <h3 class="doctor-name text-[#1e3a8a] font-bold text-lg mb-2">นพ. ธนพล มือทอง</h3>
+                    <div class="space-y-1.5 mb-4">
+                        <p class="text-xs text-gray-600 flex items-start gap-2">
+                            <i class="fas fa-graduation-cap text-gray-400 mt-0.5 w-4 text-center"></i>
+                            <span>ศัลยศาสตร์ทั่วไป</span>
+                        </p>
+                        <p class="text-xs text-gray-600 flex items-start gap-2">
+                            <i class="fas fa-calendar-alt text-gray-400 mt-0.5 w-4 text-center"></i>
+                            <span>จันทร์, อังคาร, ศุกร์</span>
+                        </p>
+                        <p class="text-xs text-gray-600 flex items-start gap-2">
+                            <i class="fas fa-clock text-gray-400 mt-0.5 w-4 text-center"></i>
+                            <span>13:00 - 16:00 น.</span>
+                        </p>
+                    </div>
+                    <a href="https://lin.ee/RN7ji5w" target="_blank" class="block text-center w-full bg-blue-50 text-blue-600 hover:bg-[#2563eb] hover:text-white font-medium py-2 rounded-xl text-sm transition duration-200 border border-blue-100 hover:border-[#2563eb]">
+                        นัดหมายแพทย์
+                    </a>
+                </div>
+            </div>
+
+            <div class="doctor-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition duration-300 group" data-dept="obgyn">
+                <div class="h-48 overflow-hidden relative bg-blue-50 flex items-center justify-center">
+                    <i class="fas fa-user-md text-6xl text-blue-200"></i>
+                </div>
+                <div class="p-5">
+                    <p class="text-[#2563eb] text-xs font-bold mb-1">แผนกสูตินรีเวช</p>
+                    <h3 class="doctor-name text-[#1e3a8a] font-bold text-lg mb-2">พญ. อารี แสงสว่าง</h3>
+                    <div class="space-y-1.5 mb-4">
+                        <p class="text-xs text-gray-600 flex items-start gap-2">
+                            <i class="fas fa-graduation-cap text-gray-400 mt-0.5 w-4 text-center"></i>
+                            <span>สูติศาสตร์-นรีเวชวิทยา</span>
+                        </p>
+                        <p class="text-xs text-gray-600 flex items-start gap-2">
+                            <i class="fas fa-calendar-alt text-gray-400 mt-0.5 w-4 text-center"></i>
+                            <span>พุธ, พฤหัสบดี</span>
+                        </p>
+                        <p class="text-xs text-gray-600 flex items-start gap-2">
+                            <i class="fas fa-clock text-gray-400 mt-0.5 w-4 text-center"></i>
+                            <span>08:30 - 12:00 น.</span>
+                        </p>
+                    </div>
+                    <a href="https://lin.ee/RN7ji5w" target="_blank" class="block text-center w-full bg-blue-50 text-blue-600 hover:bg-[#2563eb] hover:text-white font-medium py-2 rounded-xl text-sm transition duration-200 border border-blue-100 hover:border-[#2563eb]">
+                        นัดหมายแพทย์
+                    </a>
+                </div>
+            </div>
+
+            <div id="no-doctor-found" class="hidden col-span-full text-center py-12 bg-white rounded-2xl border border-dashed border-gray-200 p-6">
+                <i class="fas fa-user-md-slash text-5xl text-gray-300 mb-3 block"></i>
+                <h4 class="text-gray-700 font-bold text-base">ไม่พบรายชื่อแพทย์ที่ค้นหา</h4>
+                <p class="text-gray-400 text-xs mt-1">กรุณาตรวจสอบชื่อแพทย์อีกครั้ง หรือเปลี่ยนแผนกคลินิกที่เลือก</p>
+            </div>
+
+        </div>
+
+        <div class="flex justify-center mt-10">
+            <nav class="flex items-center space-x-1">
+                <button class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-50" disabled><i class="fas fa-chevron-left text-xs"></i></button>
+                <button class="px-3.5 py-1.5 rounded-lg bg-[#1e40af] text-white font-medium">1</button>
+                <button class="px-3.5 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 font-medium">2</button>
+                <button class="px-3.5 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 font-medium">3</button>
+                <button class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50"><i class="fas fa-chevron-right text-xs"></i></button>
+            </nav>
+        </div>
+
+    </main>
+
+    <footer class="bg-[#1e3a8a] text-white py-4 mt-auto border-t border-blue-900">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-[10px] sm:text-xs gap-2">
+            <p>© 2026 โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า. All Rights Reserved.</p>
+            <div class="flex space-x-3 text-blue-200">
+                <a href="index.html" class="hover:underline">กลับหน้าแรก</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // ==========================================
+            // 1. ระบบควบคุมการเปิด-ปิดเมนูหลักและเมนูย่อย บนมือถือ
+            // ==========================================
+            window.toggleMenu = function() {
+                const menu = document.getElementById('mobile-menu');
+                const backdrop = document.getElementById('menu-backdrop');
+                const body = document.body;
+                
+                const isOpen = menu.classList.contains('translate-x-0');
+                
+                if (isOpen) {
+                    menu.classList.remove('translate-x-0');
+                    menu.classList.add('translate-x-full');
+                    backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+                    backdrop.classList.add('opacity-0', 'pointer-events-none');
+                    body.classList.remove('overflow-hidden');
+                } else {
+                    menu.classList.remove('translate-x-full');
+                    menu.classList.add('translate-x-0');
+                    backdrop.classList.remove('opacity-0', 'pointer-events-none');
+                    backdrop.classList.add('opacity-100', 'pointer-events-auto');
+                    body.classList.add('overflow-hidden');
+                }
+            }
+
+            window.toggleSubmenu = function(submenuId, iconId) {
+                const submenu = document.getElementById(submenuId);
+                const icon = document.getElementById(iconId);
+                
+                if (submenu.classList.contains('hidden')) {
+                    submenu.classList.remove('hidden');
+                    submenu.classList.add('flex');
+                    icon.classList.add('rotate-180');
+                    icon.classList.remove('text-gray-400');
+                    icon.classList.add('text-[#1e3a8a]');
+                } else {
+                    submenu.classList.add('hidden');
+                    submenu.classList.remove('flex');
+                    icon.classList.remove('rotate-180');
+                    icon.classList.add('text-gray-400');
+                    icon.classList.remove('text-[#1e3a8a]');
+                }
+            }
+
+            // ==========================================
+            // 2. ระบบดึงค่าและกรองค้นหาแพทย์แบบ Real-time
+            // ==========================================
+            const searchInput = document.getElementById('search-name');
+            const deptSelect = document.getElementById('select-dept');
+            const searchBtn = document.getElementById('btn-search');
+            const doctorCards = document.querySelectorAll('.doctor-card');
+            const noDoctorFound = document.getElementById('no-doctor-found');
+
+            function filterDoctors() {
+                const searchKeyword = searchInput.value.trim().toLowerCase(); // คำที่พิมพ์
+                const selectedDept = deptSelect.value; // คลินิกที่เลือก
+                let matchCount = 0;
+
+                doctorCards.forEach(card => {
+                    const doctorName = card.querySelector('.doctor-name').textContent.toLowerCase();
+                    const doctorDept = card.getAttribute('data-dept');
+
+                    const isNameMatch = doctorName.includes(searchKeyword);
+                    const isDeptMatch = (selectedDept === '') || (doctorDept === selectedDept);
+
+                    // แสดงหรือซ่อนการ์ดแพทย์ตามความสอดคล้องของคำค้นหา
+                    if (isNameMatch && isDeptMatch) {
+                        card.classList.remove('hidden');
+                        matchCount++;
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+
+                // ตรวจสอบกรณีไม่เจอกลุ่มข้อมูล
+                if (matchCount === 0) {
+                    noDoctorFound.classList.remove('hidden');
+                } else {
+                    noDoctorFound.classList.add('hidden');
+                }
+            }
+
+            // จัดการ Event ทันทีที่เปลี่ยนค่าหรือพิมพ์ข้อมูล (Real-time ค้นหาทันที)
+            if (searchInput) searchInput.addEventListener('input', filterDoctors);
+            if (deptSelect) deptSelect.addEventListener('change', filterDoctors);
+            if (searchBtn) searchBtn.addEventListener('click', filterDoctors);
+        });
+    </script>
+</body>
+</html>
