@@ -65,7 +65,7 @@
                         เกี่ยวกับเรา <i class="fas fa-chevron-down text-[10px] mt-0.5 transition-transform group-hover:rotate-180"></i>
                     </button>
                     <div class="absolute top-full left-0 bg-white shadow-lg rounded-b-lg overflow-hidden hidden group-hover:block min-w-[220px] border-t-2 border-[#1e3a8a]">
-                        <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">ประวัติความเป็นมา</a>
+                        <a href="history.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">ประวัติความเป็นมา</a>
                         <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">วิสัยทัศน์ และ พันธกิจ</a>
                         <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a] border-b border-gray-50">โครงสร้างผู้บริหาร</a>
                         <a href="#" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-[#1e3a8a]">คณะกรรมการบริหาร</a>
@@ -111,7 +111,6 @@
             <div class="flex items-center space-x-2 md:space-x-3">
                 <button class="text-gray-500 hover:text-[#1e3a8a] p-2 text-sm sm:text-base transition"><i class="fas fa-search"></i></button>
                 
-                <!-- ตัวเลือกเปลี่ยนธีมขาวดำ (แสดงเฉพาะ Admin) -->
                 <select id="themeSelector" onchange="changeTheme(this.value)" class="admin-only hidden border border-gray-200 rounded px-1.5 py-1 text-xs font-medium text-gray-600 bg-gray-50 outline-none cursor-pointer hover:bg-gray-100 transition">
                     <option value="color">สีปกติ</option>
                     <option value="bw">ขาวดำ</option>
@@ -152,7 +151,7 @@
                     <i id="icon-about" class="fas fa-chevron-down text-[10px] transition-transform duration-300 text-gray-400"></i>
                 </button>
                 <div id="sub-about" class="hidden flex-col pl-11 pr-3 py-1 space-y-3 mt-1 text-xs text-gray-500">
-                    <a href="#" class="hover:text-[#1e3a8a] block">ประวัติความเป็นมา</a>
+                    <a href="history.html" class="hover:text-[#1e3a8a] block">ประวัติความเป็นมา</a>
                     <a href="#" class="hover:text-[#1e3a8a] block">วิสัยทัศน์ และ พันธกิจ</a>
                     <a href="#" class="hover:text-[#1e3a8a] block">โครงสร้างผู้บริหาร</a>
                 </div>
@@ -279,7 +278,7 @@
         <div class="col-span-1 lg:col-span-8 space-y-6">
             <!-- ข่าวประชาสัมพันธ์ -->
             <section id="news" class="bg-white rounded-2xl shadow-sm p-4 sm:p-6 border border-gray-100 relative">
-                <button onclick="openAdminModal('news')" class="admin-only hidden absolute top-4 right-20 bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1 rounded-md shadow transition">
+                <button onclick="openAdminModal('news')" class="admin-only hidden absolute top-4 right-20 bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1 rounded-md shadow transition z-10">
                     <i class="fas fa-edit mr-1"></i> แก้ไขข่าว
                 </button>
 
@@ -294,33 +293,13 @@
             </section>
 
             <!-- แนะนำหน่วยงาน -->
-            <section id="services" class="bg-white rounded-2xl shadow-sm p-4 sm:p-6 border border-gray-100">
+            <section id="services" class="bg-white rounded-2xl shadow-sm p-4 sm:p-6 border border-gray-100 relative">
+                <button onclick="openAdminModal('departments')" class="admin-only hidden absolute top-4 right-4 bg-amber-500 hover:bg-amber-600 text-white text-xs px-2.5 py-1 rounded shadow transition z-10">
+                    <i class="fas fa-edit mr-1"></i> แก้ไขหน่วยงาน
+                </button>
                 <h3 class="text-[#1e3a8a] text-base sm:text-lg font-bold mb-4">แนะนำหน่วยงาน</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    <div class="relative h-24 sm:h-36 md:h-40 rounded-xl overflow-hidden group cursor-pointer shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="ER">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex items-end p-2 sm:p-3">
-                            <span class="text-white text-xs sm:text-sm font-medium">ห้องฉุกเฉิน (ER)</span>
-                        </div>
-                    </div>
-                    <div class="relative h-24 sm:h-36 md:h-40 rounded-xl overflow-hidden group cursor-pointer shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="OPD">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex items-end p-2 sm:p-3">
-                            <span class="text-white text-xs sm:text-sm font-medium">ผู้ป่วยนอก (OPD)</span>
-                        </div>
-                    </div>
-                    <div class="relative h-24 sm:h-36 md:h-40 rounded-xl overflow-hidden group cursor-pointer shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Pediatrics">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex items-end p-2 sm:p-3">
-                            <span class="text-white text-xs sm:text-sm font-medium">แผนกผู้ป่วยเด็ก</span>
-                        </div>
-                    </div>
-                    <div class="relative h-24 sm:h-36 md:h-40 rounded-xl overflow-hidden group cursor-pointer shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Surgery">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex items-end p-2 sm:p-3">
-                            <span class="text-white text-xs sm:text-sm font-medium">ศูนย์ผ่าตัด</span>
-                        </div>
-                    </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="departmentsContainer">
+                    <!-- Dynamic Departments -->
                 </div>
             </section>
         </div>
@@ -477,7 +456,6 @@
                         <label class="block text-xs font-semibold text-gray-600 mb-1">รายละเอียดสั้นๆ</label>
                         <textarea id="input-hero-desc" rows="2" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
                     </div>
-                    <!-- เพิ่มช่องแก้ไข URL รูปภาพใหญ่ตรงนี้ -->
                     <div>
                         <label class="block text-xs font-semibold text-gray-600 mb-1"><i class="fas fa-image mr-1 text-amber-600"></i> URL รูปภาพพื้นหลังใหญ่ (Banner Image)</label>
                         <input type="text" id="input-hero-bg" placeholder="https://example.com/image.jpg" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
@@ -492,7 +470,15 @@
                     <div id="adminNewsInputs" class="space-y-4"></div>
                 </div>
 
-                <!-- ส่วนที่ 3: สถิติการให้บริการ -->
+                <!-- ส่วนที่ 3: จัดการแนะนำหน่วยงาน (มีรายละเอียดบทบาทหน้าที่) -->
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
+                    <h4 class="font-bold text-[#1e3a8a] flex items-center gap-1.5 text-base border-b pb-2">
+                        <i class="fas fa-hospital-user"></i> แนะนำหน่วยงาน (4 หน่วยงาน)
+                    </h4>
+                    <div id="adminDeptInputs" class="space-y-4"></div>
+                </div>
+
+                <!-- ส่วนที่ 4: สถิติการให้บริการ -->
                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
                     <h4 class="font-bold text-[#1e3a8a] flex items-center gap-1.5 text-base border-b pb-2">
                         <i class="fas fa-chart-bar"></i> สถิติการให้บริการ
@@ -517,7 +503,7 @@
                     </div>
                 </div>
 
-                <!-- ส่วนที่ 4: ข้อมูลการติดต่อ -->
+                <!-- ส่วนที่ 5: ข้อมูลการติดต่อ -->
                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
                     <h4 class="font-bold text-[#1e3a8a] flex items-center gap-1.5 text-base border-b pb-2">
                         <i class="fas fa-address-book"></i> ข้อมูลการติดต่อ
@@ -556,6 +542,58 @@
         </div>
     </div>
 
+    <!-- MODAL 3: ป๊อปอัปแสดงรายละเอียดข่าว (News Detail Modal) -->
+    <div id="newsDetailModal" class="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-gray-100">
+            <div class="relative h-48 sm:h-64 w-full bg-gray-100 overflow-hidden flex-shrink-0">
+                <img id="modalNewsImg" src="" class="w-full h-full object-cover">
+                <button onclick="closeNewsDetailModal()" class="absolute top-3 right-3 bg-black/50 hover:bg-black/80 text-white rounded-full w-8 h-8 flex items-center justify-center transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4 flex-1">
+                <div class="flex items-center gap-2 text-xs text-blue-600 font-semibold">
+                    <i class="far fa-calendar-alt"></i>
+                    <span id="modalNewsDate"></span>
+                </div>
+                <h3 class="text-lg sm:text-xl font-bold text-[#1e3a8a] leading-snug" id="modalNewsTitle"></h3>
+                <hr class="border-gray-100">
+                <div class="text-sm text-gray-600 leading-relaxed whitespace-pre-line" id="modalNewsDetail"></div>
+            </div>
+            <div class="bg-gray-50 px-6 py-3 border-t border-gray-100 flex justify-end">
+                <button onclick="closeNewsDetailModal()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg text-xs font-semibold transition">
+                    ปิดหน้าต่าง
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: ป๊อปอัปแสดงรายละเอียดหน่วยงาน (Department Detail Modal) -->
+    <div id="deptDetailModal" class="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-gray-100">
+            <div class="relative h-48 sm:h-64 w-full bg-gray-100 overflow-hidden flex-shrink-0">
+                <img id="modalDeptImg" src="" class="w-full h-full object-cover">
+                <button onclick="closeDeptDetailModal()" class="absolute top-3 right-3 bg-black/50 hover:bg-black/80 text-white rounded-full w-8 h-8 flex items-center justify-center transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4 flex-1">
+                <div class="flex items-center gap-2 text-xs text-emerald-600 font-semibold">
+                    <i class="fas fa-clinic-medical"></i>
+                    <span>แนะนำหน่วยงานบริการ</span>
+                </div>
+                <h3 class="text-lg sm:text-xl font-bold text-[#1e3a8a] leading-snug" id="modalDeptTitle"></h3>
+                <hr class="border-gray-100">
+                <div class="text-sm text-gray-600 leading-relaxed whitespace-pre-line" id="modalDeptDetail"></div>
+            </div>
+            <div class="bg-gray-50 px-6 py-3 border-t border-gray-100 flex justify-end">
+                <button onclick="closeDeptDetailModal()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg text-xs font-semibold transition">
+                    ปิดหน้าต่าง
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-[#1e3a8a] text-white py-4 mt-8 text-center md:text-left border-t border-blue-900">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-[10px] sm:text-xs gap-3">
@@ -582,6 +620,28 @@
             heroSubtitle: "บริการด้วยหัวใจ ห่วงใยดุจญาติมิตร",
             heroDesc: "พัฒนาคุณภาพบริการ มุ่งสู่มาตรฐาน สร้างสุขภาพดีให้ชุมชน",
             heroBgImg: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+            departments: [
+                {
+                    name: "ห้องฉุกเฉิน (ER)",
+                    img: "https://images.unsplash.com/photo-1516549655169-df83a0774514?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60",
+                    detail: "เปิดให้บริการช่วยเหลือผู้ป่วยฉุกเฉินและอุบัติเหตุตลอด 24 ชั่วโมง พร้อมทีมแพทย์ พยาบาลวิชาชีพ และเครื่องมือแพทย์กู้ชีพที่ทันสมัย\n\nเบอร์โทรสายตรงฉุกเฉิน: 1669 หรือ 056-709-555 ต่อห้องฉุกเฉิน"
+                },
+                {
+                    name: "ผู้ป่วยนอก (OPD)",
+                    img: "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60",
+                    detail: "ให้บริการตรวจรักษาโรคทั่วไป และคลินิกตรวจโรคเฉพาะทาง โดยแพทย์ผู้เชี่ยวชาญ เปิดให้บริการในวันและเวลาราชการ (จันทร์ - ศุกร์ 08.00 - 16.00 น.)\n\nสามารถจองคิวและนัดหมายออนไลน์ล่วงหน้าได้เพื่อลดระยะเวลาการรอคอย"
+                },
+                {
+                    name: "แผนกผู้ป่วยเด็ก",
+                    img: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60",
+                    detail: "ให้คำปรึกษาและรักษาโรคในเด็ก ฉีดวัคซีนป้องกันโรคตามวัย และดูแลพัฒนาการเด็กโดยกุมารแพทย์ผู้เชี่ยวชาญ บรรยากาศเป็นมิตรและปลอดภัยสำหรับเด็ก"
+                },
+                {
+                    name: "ศูนย์ผ่าตัด",
+                    img: "https://images.unsplash.com/photo-1551076805-e1869033e561?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60",
+                    detail: "ห้องผ่าตัดมาตรฐานสูง ปลอดเชื้อด้วยระบบหมุนเวียนอากาศพิเศษ พร้อมทีมศัลยแพทย์ วิสัญญีแพทย์ และพยาบาลห้องผ่าตัดที่มีความชำนาญสูง รองรับทั้งการผ่าตัดทั่วไปและการผ่าตัดผ่านกล้อง"
+                }
+            ],
             stats: {
                 doctors: "45",
                 nurses: "320",
@@ -597,17 +657,20 @@
                 {
                     date: "20 พ.ค. 2567",
                     title: "รับสมัครบุคคลเพื่อคัดเลือกเป็นพนักงานกระทรวงสาธารณสุขทั่วไป",
-                    img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60"
+                    img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60",
+                    detail: "โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า มีความประสงค์จะรับสมัครบุคคลเพื่อจัดจ้างเป็นพนักงานกระทรวงสาธารณสุขทั่วไปในตำแหน่งต่างๆ\n\n- ตำแหน่งพยาบาลวิชาชีพ จำนวน 2 อัตรา\n- ตำแหน่งเจ้าพนักงานเภสัชกรรม จำนวน 1 อัตรา\n\nผู้สนใจสามารถขอรับและยื่นใบสมัครได้ที่ กลุ่มงานทรัพยากรบุคคล อาคารอำนวยการ ตั้งแต่วันนี้เป็นต้นไป ในวันและเวลาราชการ"
                 },
                 {
                     date: "15 พ.ค. 2567",
                     title: "เชิญชวนประชาชนกลุ่มเสี่ยงรับบริการฉีดวัคซีนไข้หวัดใหญ่ฟรี",
-                    img: "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60"
+                    img: "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60",
+                    detail: "ขอเชิญชวนประชาชนกลุ่มเสี่ยง 7 กลุ่มโรคเรื้อรัง หญิงตั้งครรภ์ ผู้สูงอายุ 65 ปีขึ้นไป และเด็กอายุ 6 เดือน ถึง 2 ปี รับบริการฉีดวัคซีนป้องกันโรคไข้หวัดใหญ่ตามฤดูกาล ฟรี!\n\nเปิดให้บริการตั้งแต่วันนี้เป็นต้นไป ณ ห้องบริการวัคซีน กลุ่มงานเวชกรรมสังคม อาคารบริการ ชั้น 1 ในวันจันทร์ - ศุกร์ เว้นวันหยุดราชการ"
                 },
                 {
                     date: "10 พ.ค. 2567",
                     title: "กิจกรรมอบรมฟื้นฟูความรู้การช่วยชีวิตขั้นพื้นฐาน (CPR)",
-                    img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60"
+                    img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60",
+                    detail: "กลุ่มงานการพยาบาล จัดการอบรมฟื้นฟูความรู้และซ้อมแผนการช่วยชีวิตขั้นพื้นฐาน (CPR) และการใช้เครื่องกระตุกหัวใจไฟฟ้าอัตโนมัติ (AED) ให้แก่บุคลากรทางการแพทย์และเจ้าหน้าที่ เพื่อเพิ่มทักษะความชำนาญในการช่วยเหลือผู้ป่วยภาวะฉุกเฉินอย่างมีประสิทธิภาพ"
                 }
             ]
         };
@@ -625,10 +688,24 @@
             document.getElementById('display-hero-subtitle').innerText = data.heroSubtitle;
             document.getElementById('display-hero-desc').innerText = data.heroDesc;
 
-            // เปลี่ยนภาพพื้นหลังของ Hero Section
             const heroBgSection = document.getElementById('heroBgSection');
             const bgUrl = data.heroBgImg || defaultSiteData.heroBgImg;
             heroBgSection.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.4)), url('${bgUrl}')`;
+
+            // แสดงผลส่วนแนะนำหน่วยงาน (Dynamic Departments)
+            const departmentsContainer = document.getElementById('departmentsContainer');
+            departmentsContainer.innerHTML = '';
+            const depts = data.departments || defaultSiteData.departments;
+            depts.forEach((dept, index) => {
+                departmentsContainer.innerHTML += `
+                    <div onclick="openDeptDetailModal(${index})" class="relative h-24 sm:h-36 md:h-40 rounded-xl overflow-hidden group cursor-pointer shadow-sm hover:shadow-md transition">
+                        <img src="${dept.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="${dept.name}">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex items-end p-2 sm:p-3">
+                            <span class="text-white text-xs sm:text-sm font-medium">${dept.name}</span>
+                        </div>
+                    </div>
+                `;
+            });
 
             document.getElementById('display-stat-doctors').innerText = data.stats.doctors;
             document.getElementById('display-stat-nurses').innerText = data.stats.nurses;
@@ -644,20 +721,61 @@
             data.news.forEach((item, index) => {
                 const colSpanClass = index === 2 ? 'sm:col-span-2 md:col-span-1' : '';
                 newsContainer.innerHTML += `
-                    <div class="border border-gray-100 rounded-xl overflow-hidden flex sm:flex-col hover:shadow-md transition bg-white group cursor-pointer relative ${colSpanClass}">
-                        <button onclick="openAdminModal('news')" class="admin-only hidden absolute top-2 right-2 bg-amber-500 text-white p-1 rounded text-[10px] z-10 shadow"><i class="fas fa-edit"></i></button>
+                    <div onclick="openNewsDetailModal(${index})" class="border border-gray-100 rounded-xl overflow-hidden flex sm:flex-col hover:shadow-lg transition duration-200 bg-white group cursor-pointer relative ${colSpanClass}">
+                        <button onclick="event.stopPropagation(); openAdminModal('news')" class="admin-only hidden absolute top-2 right-2 bg-amber-500 text-white p-1 rounded text-[10px] z-10 shadow"><i class="fas fa-edit"></i></button>
                         <div class="w-24 h-24 sm:w-full sm:h-32 flex-shrink-0 overflow-hidden bg-blue-50">
                             <img src="${item.img}" alt="News" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                         </div>
                         <div class="p-3 flex flex-col justify-center">
                             <p class="text-[10px] text-gray-400 mb-1"><i class="far fa-calendar-alt mr-1"></i>${item.date}</p>
                             <p class="text-xs sm:text-sm font-medium text-gray-800 line-clamp-2 group-hover:text-[#2563eb] transition">${item.title}</p>
+                            <span class="text-[10px] text-blue-500 font-medium mt-1 inline-flex items-center gap-1 group-hover:underline">อ่านเพิ่มเติม <i class="fas fa-arrow-right text-[8px]"></i></span>
                         </div>
                     </div>
                 `;
             });
 
             checkRoleAndSetup();
+        }
+
+        // ฟังก์ชันเปิดป๊อปอัปแสดงรายละเอียดข่าว
+        function openNewsDetailModal(index) {
+            const data = getSiteData();
+            const newsItem = data.news[index];
+            if (!newsItem) return;
+
+            document.getElementById('modalNewsImg').src = newsItem.img;
+            document.getElementById('modalNewsDate').innerText = newsItem.date;
+            document.getElementById('modalNewsTitle').innerText = newsItem.title;
+            document.getElementById('modalNewsDetail').innerText = newsItem.detail || "ไม่มีรายละเอียดเพิ่มเติม";
+
+            document.getElementById('newsDetailModal').classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeNewsDetailModal() {
+            document.getElementById('newsDetailModal').classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        // ฟังก์ชันเปิดป๊อปอัปแสดงรายละเอียดหน่วยงาน
+        function openDeptDetailModal(index) {
+            const data = getSiteData();
+            const depts = data.departments || defaultSiteData.departments;
+            const deptItem = depts[index];
+            if (!deptItem) return;
+
+            document.getElementById('modalDeptImg').src = deptItem.img;
+            document.getElementById('modalDeptTitle').innerText = deptItem.name;
+            document.getElementById('modalDeptDetail').innerText = deptItem.detail || "ไม่มีรายละเอียดเพิ่มเติมเกี่ยวกับหน่วยงานนี้";
+
+            document.getElementById('deptDetailModal').classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeDeptDetailModal() {
+            document.getElementById('deptDetailModal').classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
         }
 
         function handleAdminTrigger() {
@@ -714,6 +832,7 @@
             document.getElementById('input-contact-phone').value = data.contact.phone;
             document.getElementById('input-contact-email').value = data.contact.email;
 
+            // โหลดช่องกรอกข่าวสาร
             const newsInputsContainer = document.getElementById('adminNewsInputs');
             newsInputsContainer.innerHTML = '';
             data.news.forEach((newsItem, idx) => {
@@ -724,7 +843,25 @@
                             <input type="text" id="news-date-${idx}" value="${newsItem.date}" placeholder="วันที่" class="border rounded p-1.5 text-xs">
                             <input type="text" id="news-img-${idx}" value="${newsItem.img}" placeholder="URL รูปภาพ" class="col-span-2 border rounded p-1.5 text-xs">
                         </div>
-                        <input type="text" id="news-title-${idx}" value="${newsItem.title}" placeholder="หัวข้อข่าว" class="w-full border rounded p-1.5 text-xs">
+                        <input type="text" id="news-title-${idx}" value="${newsItem.title}" placeholder="หัวข้อข่าว" class="w-full border rounded p-1.5 text-xs font-semibold">
+                        <textarea id="news-detail-${idx}" rows="3" placeholder="รายละเอียดข่าวฉบับเต็ม" class="w-full border rounded p-1.5 text-xs">${newsItem.detail || ''}</textarea>
+                    </div>
+                `;
+            });
+
+            // โหลดช่องกรอกแนะนำหน่วยงาน (รวมทั้งรายละเอียดบทบาทหน้าที่)
+            const deptInputsContainer = document.getElementById('adminDeptInputs');
+            deptInputsContainer.innerHTML = '';
+            const depts = data.departments || defaultSiteData.departments;
+            depts.forEach((dept, idx) => {
+                deptInputsContainer.innerHTML += `
+                    <div class="p-3 bg-white rounded-lg border border-gray-200 space-y-2">
+                        <div class="font-semibold text-xs text-blue-600">หน่วยงานที่ ${idx + 1}</div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" id="dept-name-${idx}" value="${dept.name}" placeholder="ชื่อหน่วยงาน" class="border rounded p-1.5 text-xs font-semibold">
+                            <input type="text" id="dept-img-${idx}" value="${dept.img}" placeholder="URL รูปภาพ" class="border rounded p-1.5 text-xs">
+                        </div>
+                        <textarea id="dept-detail-${idx}" rows="2" placeholder="รายละเอียดบริการของหน่วยงาน" class="w-full border rounded p-1.5 text-xs">${dept.detail || ''}</textarea>
                     </div>
                 `;
             });
@@ -757,17 +894,42 @@
                     {
                         date: document.getElementById('news-date-0').value,
                         img: document.getElementById('news-img-0').value,
-                        title: document.getElementById('news-title-0').value
+                        title: document.getElementById('news-title-0').value,
+                        detail: document.getElementById('news-detail-0').value
                     },
                     {
                         date: document.getElementById('news-date-1').value,
                         img: document.getElementById('news-img-1').value,
-                        title: document.getElementById('news-title-1').value
+                        title: document.getElementById('news-title-1').value,
+                        detail: document.getElementById('news-detail-1').value
                     },
                     {
                         date: document.getElementById('news-date-2').value,
                         img: document.getElementById('news-img-2').value,
-                        title: document.getElementById('news-title-2').value
+                        title: document.getElementById('news-title-2').value,
+                        detail: document.getElementById('news-detail-2').value
+                    }
+                ],
+                departments: [
+                    {
+                        name: document.getElementById('dept-name-0').value,
+                        img: document.getElementById('dept-img-0').value,
+                        detail: document.getElementById('dept-detail-0').value
+                    },
+                    {
+                        name: document.getElementById('dept-name-1').value,
+                        img: document.getElementById('dept-img-1').value,
+                        detail: document.getElementById('dept-detail-1').value
+                    },
+                    {
+                        name: document.getElementById('dept-name-2').value,
+                        img: document.getElementById('dept-img-2').value,
+                        detail: document.getElementById('dept-detail-2').value
+                    },
+                    {
+                        name: document.getElementById('dept-name-3').value,
+                        img: document.getElementById('dept-img-3').value,
+                        detail: document.getElementById('dept-detail-3').value
                     }
                 ]
             };
