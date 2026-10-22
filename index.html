@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า</title>
+    <title>โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า - ระบบจัดการข้อมูล</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,7 +17,6 @@
             background-color: #f4f7fa;
         }
         .hero-bg {
-            background-image: linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.4)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
         }
@@ -25,35 +24,42 @@
             background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(8px);
         }
-        /* ซ่อน Scrollbar ของเมนูมือถือ แต่ยังเลื่อนได้ */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .bw-mode {
+            filter: grayscale(100%);
         }
     </style>
 </head>
 <body id="home" class="antialiased overflow-x-hidden relative">
 
-    <!-- Navbar -->
+    <!-- Admin Top Badge -->
+    <div id="adminBadge" class="hidden bg-amber-500 text-white text-center py-1.5 text-xs font-bold tracking-wide shadow-inner flex justify-center items-center gap-2">
+        <span><i class="fas fa-user-shield mr-1.5"></i> กำลังอยู่ในโหมดผู้ดูแลระบบ (หลังบ้าน)</span>
+        <button onclick="openAdminModal()" class="bg-white text-amber-800 px-2 py-0.5 rounded text-xs hover:bg-amber-100 font-semibold shadow-sm ml-2">
+            <i class="fas fa-edit mr-1"></i> เปิดแผงแก้ไขทั้งหมด
+        </button>
+        <button onclick="logoutAdmin()" class="underline hover:text-gray-100 ml-2">ออกจากระบบ</button>
+    </div>
+
     <header class="bg-white shadow-sm sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 flex justify-between items-center h-16 md:h-20">
-            <!-- โลโก้และชื่อ -->
-            <a href="loing.html" class="flex items-center space-x-2 md:space-x-3">
+            <a href="#home" class="flex items-center space-x-2 md:space-x-3">
                 <img src="https://img2.pic.in.th/logo_lomkao2-no-BG.png" alt="โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า โลโก้" class="h-10 w-10 md:h-12 md:w-12 object-contain flex-shrink-0">
                 <div>
-                    <h1 class="text-[#1e3a8a] font-bold text-xs sm:text-sm md:text-base leading-tight">โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า</h1>
+                    <h1 class="text-[#1e3a8a] font-bold text-xs sm:text-sm md:text-base leading-tight" id="display-hosp-name">โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า</h1>
                     <p class="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider mt-0.5">LOMKAO CROWN PRINCE HOSPITAL</p>
                 </div>
             </a>
 
-            <!-- เมนู Desktop -->
             <nav class="hidden lg:flex items-center space-x-1 xl:space-x-2 text-sm font-medium text-gray-700 h-full">
                 <a href="#home" class="px-3 py-2 text-[#1e3a8a] font-semibold border-b-2 border-[#1e3a8a]">หน้าแรก</a>
                 
-                <!-- Dropdown: เกี่ยวกับโรงพยาบาล -->
                 <div class="relative group h-full flex items-center">
                     <button class="px-3 py-2 hover:text-[#1e3a8a] transition flex items-center gap-1 cursor-pointer">
                         เกี่ยวกับเรา <i class="fas fa-chevron-down text-[10px] mt-0.5 transition-transform group-hover:rotate-180"></i>
@@ -66,7 +72,6 @@
                     </div>
                 </div>
 
-                <!-- Dropdown: บริการ -->
                 <div class="relative group h-full flex items-center">
                     <button class="px-3 py-2 hover:text-[#1e3a8a] transition flex items-center gap-1 cursor-pointer">
                         บริการ <i class="fas fa-chevron-down text-[10px] mt-0.5 transition-transform group-hover:rotate-180"></i>
@@ -78,7 +83,6 @@
                     </div>
                 </div>
 
-                <!-- Dropdown: สำหรับผู้รับบริการ -->
                 <div class="relative group h-full flex items-center">
                     <button class="px-3 py-2 hover:text-[#1e3a8a] transition flex items-center gap-1 cursor-pointer">
                         สำหรับผู้รับบริการ <i class="fas fa-chevron-down text-[10px] mt-0.5 transition-transform group-hover:rotate-180"></i>
@@ -90,7 +94,6 @@
                     </div>
                 </div>
 
-                <!-- Dropdown: ข่าวสาร -->
                 <div class="relative group h-full flex items-center">
                     <button class="px-3 py-2 hover:text-[#1e3a8a] transition flex items-center gap-1 cursor-pointer">
                         ข่าวสาร <i class="fas fa-chevron-down text-[10px] mt-0.5 transition-transform group-hover:rotate-180"></i>
@@ -105,14 +108,19 @@
                 <a href="#contact" class="px-3 py-2 hover:text-[#1e3a8a] transition">ติดต่อเรา</a>
             </nav>
 
-            <!-- ปุ่มด้านขวา Desktop & Mobile -->
             <div class="flex items-center space-x-2 md:space-x-3">
                 <button class="text-gray-500 hover:text-[#1e3a8a] p-2 text-sm sm:text-base transition"><i class="fas fa-search"></i></button>
+                
+                <!-- ตัวเลือกเปลี่ยนธีมขาวดำ (แสดงเฉพาะ Admin) -->
+                <select id="themeSelector" onchange="changeTheme(this.value)" class="admin-only hidden border border-gray-200 rounded px-1.5 py-1 text-xs font-medium text-gray-600 bg-gray-50 outline-none cursor-pointer hover:bg-gray-100 transition">
+                    <option value="color">สีปกติ</option>
+                    <option value="bw">ขาวดำ</option>
+                </select>
+
                 <select class="hidden sm:block border border-gray-200 rounded px-1.5 py-1 text-xs font-medium text-gray-600 bg-gray-50 outline-none cursor-pointer hover:bg-gray-100 transition">
                     <option>TH</option>
                     <option>EN</option>
                 </select>
-                <!-- ปุ่มเปิดเมนูมือถือ -->
                 <button class="block lg:hidden text-gray-700 text-xl p-2 focus:outline-none hover:text-[#1e3a8a] transition" onclick="toggleMenu()">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -120,13 +128,9 @@
         </div>
     </header>
 
-    <!-- Backdrop สำหรับเมนูมือถือ -->
     <div id="menu-backdrop" class="fixed inset-0 bg-black/60 z-40 opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleMenu()"></div>
 
-    <!-- เมนู Mobile (Sidebar Drawer) -->
     <div id="mobile-menu" class="fixed top-0 right-0 h-full w-[280px] sm:w-[320px] bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
-        
-        <!-- ส่วนหัวเมนู -->
         <div class="flex items-center justify-between p-4 border-b border-gray-100 bg-white">
             <div class="flex items-center space-x-2">
                 <img src="https://img2.pic.in.th/logo_lomkao2-no-BG.png" alt="โลโก้" class="h-8 w-8 object-contain">
@@ -137,14 +141,11 @@
             </button>
         </div>
         
-        <!-- รายการเมนูมือถือ -->
         <div class="flex-1 overflow-y-auto px-3 py-4 space-y-1 text-sm font-medium text-gray-700 no-scrollbar">
-            
             <a href="#home" onclick="toggleMenu()" class="flex items-center space-x-3 py-3 px-3 bg-blue-50 text-[#1e3a8a] rounded-xl">
                 <i class="fas fa-home w-5 text-center"></i><span>หน้าแรก</span>
             </a>
 
-            <!-- Accordion: เกี่ยวกับเรา -->
             <div class="border-b border-gray-50 pb-1">
                 <button onclick="toggleSubmenu('sub-about', 'icon-about')" class="w-full flex items-center justify-between py-3 px-3 hover:bg-gray-50 text-gray-600 rounded-xl transition focus:outline-none">
                     <div class="flex items-center space-x-3"><i class="fas fa-hospital w-5 text-center"></i><span>เกี่ยวกับเรา</span></div>
@@ -157,7 +158,6 @@
                 </div>
             </div>
 
-            <!-- Accordion: บริการ -->
             <div class="border-b border-gray-50 pb-1">
                 <button onclick="toggleSubmenu('sub-services', 'icon-services')" class="w-full flex items-center justify-between py-3 px-3 hover:bg-gray-50 text-gray-600 rounded-xl transition focus:outline-none">
                     <div class="flex items-center space-x-3"><i class="fas fa-stethoscope w-5 text-center"></i><span>บริการของเรา</span></div>
@@ -169,7 +169,6 @@
                 </div>
             </div>
 
-            <!-- Accordion: สำหรับผู้รับบริการ -->
             <div class="border-b border-gray-50 pb-1">
                 <button onclick="toggleSubmenu('sub-patient', 'icon-patient')" class="w-full flex items-center justify-between py-3 px-3 hover:bg-gray-50 text-gray-600 rounded-xl transition focus:outline-none">
                     <div class="flex items-center space-x-3"><i class="fas fa-user-injured w-5 text-center"></i><span>สำหรับผู้รับบริการ</span></div>
@@ -182,7 +181,6 @@
                 </div>
             </div>
 
-            <!-- Accordion: ข่าวสาร -->
             <div class="border-b border-gray-50 pb-1">
                 <button onclick="toggleSubmenu('sub-news', 'icon-news')" class="w-full flex items-center justify-between py-3 px-3 hover:bg-gray-50 text-gray-600 rounded-xl transition focus:outline-none">
                     <div class="flex items-center space-x-3"><i class="fas fa-bullhorn w-5 text-center"></i><span>ข่าวสารและประกาศ</span></div>
@@ -200,7 +198,6 @@
             </a>
         </div>
         
-        <!-- ส่วนล่างเมนูมือถือ (ภาษา) -->
         <div class="p-4 bg-gray-50 border-t border-gray-100">
             <div class="flex items-center justify-between bg-white px-3 py-2 rounded-lg border border-gray-200">
                 <span class="text-xs text-gray-500 font-medium"><i class="fas fa-globe mr-2"></i>เปลี่ยนภาษา</span>
@@ -212,14 +209,16 @@
         </div>
     </div>
 
-    <!-- ส่วนเนื้อหาเว็บไซต์ (Hero, Quick Links, Content) ยังคงเดิม -->
     <!-- Hero Section -->
-    <div class="hero-bg min-h-[340px] sm:min-h-[380px] md:h-[460px] flex items-center py-8 md:py-0">
+    <div id="heroBgSection" class="hero-bg min-h-[340px] sm:min-h-[380px] md:h-[460px] flex items-center py-8 md:py-0 relative">
+        <button onclick="openAdminModal('hero')" class="admin-only hidden absolute top-4 right-4 bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1.5 rounded-md shadow transition">
+            <i class="fas fa-edit mr-1"></i> แก้ไขส่วนนี้
+        </button>
         <div class="max-w-7xl mx-auto px-4 w-full">
             <div class="max-w-2xl text-center md:text-left">
-                <h2 class="text-[#1e3a8a] font-bold text-xl sm:text-2xl md:text-4xl mb-2 sm:mb-3">โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า</h2>
-                <h3 class="text-[#1e3a8a] text-base sm:text-lg md:text-2xl mb-2 font-medium">บริการด้วยหัวใจ ห่วงใยดุจญาติมิตร</h3>
-                <p class="text-xs sm:text-sm md:text-base text-gray-600 mb-6 sm:mb-8 max-w-md mx-auto md:mx-0">พัฒนาคุณภาพบริการ มุ่งสู่มาตรฐาน สร้างสุขภาพดีให้ชุมชน</p>
+                <h2 class="text-[#1e3a8a] font-bold text-xl sm:text-2xl md:text-4xl mb-2 sm:mb-3" id="display-hero-title">โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า</h2>
+                <h3 class="text-[#1e3a8a] text-base sm:text-lg md:text-2xl mb-2 font-medium" id="display-hero-subtitle">บริการด้วยหัวใจ ห่วงใยดุจญาติมิตร</h3>
+                <p class="text-xs sm:text-sm md:text-base text-gray-600 mb-6 sm:mb-8 max-w-md mx-auto md:mx-0" id="display-hero-desc">พัฒนาคุณภาพบริการ มุ่งสู่มาตรฐาน สร้างสุขภาพดีให้ชุมชน</p>
                 
                 <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-2.5 px-4 sm:px-0">
                     <a href="search-doctor.html" class="bg-[#1e40af] hover:bg-blue-800 text-white px-5 py-2.5 rounded-full shadow-md flex items-center justify-center space-x-2 text-xs sm:text-sm transition">
@@ -236,17 +235,17 @@
         </div>
     </div>
 
-    <!-- Quick Links Menu -->
+    <!-- Quick Links Bar -->
     <div class="max-w-7xl mx-auto px-2 sm:px-4 relative -mt-8 sm:-mt-10 lg:-mt-12 z-10">
-        <div class="glass-panel rounded-xl md:rounded-2xl shadow-lg grid grid-cols-4 md:grid-cols-8 p-2 md:p-4 gap-y-4 gap-x-1 border border-white/40">
+        <div class="glass-panel rounded-xl md:rounded-2xl shadow-lg grid grid-cols-4 md:grid-cols-8 p-2 md:p-4 gap-y-4 gap-x-1 border border-white/40 relative">
             <a href="search-doctor.html" class="flex flex-col items-center text-center hover:-translate-y-1 transition duration-200 group">
                 <div class="h-9 w-9 sm:h-12 sm:w-12 flex items-center justify-center text-[#2563eb] text-lg sm:text-2xl group-hover:scale-110 transition"><i class="fas fa-user-md"></i></div>
                 <span class="text-[10px] sm:text-xs text-gray-700 font-medium mt-1">ค้นหาแพทย์</span>
             </a>
-           <a href="https://lin.ee/RN7ji5w" target="_blank" class="flex flex-col items-center text-center hover:-translate-y-1 transition duration-200 group">
-    <div class="h-9 w-9 sm:h-12 sm:w-12 flex items-center justify-center text-[#2563eb] text-lg sm:text-2xl group-hover:scale-110 transition"><i class="fas fa-calendar-check"></i></div>
-    <span class="text-[10px] sm:text-xs text-gray-700 font-medium mt-1">นัดหมายออนไลน์</span>
-</a>
+            <a href="https://lin.ee/RN7ji5w" target="_blank" class="flex flex-col items-center text-center hover:-translate-y-1 transition duration-200 group">
+                <div class="h-9 w-9 sm:h-12 sm:w-12 flex items-center justify-center text-[#2563eb] text-lg sm:text-2xl group-hover:scale-110 transition"><i class="fas fa-calendar-check"></i></div>
+                <span class="text-[10px] sm:text-xs text-gray-700 font-medium mt-1">นัดหมายออนไลน์</span>
+            </a>
             <a href="#stats" class="flex flex-col items-center text-center hover:-translate-y-1 transition duration-200 group">
                 <div class="h-9 w-9 sm:h-12 sm:w-12 flex items-center justify-center text-[#2563eb] text-lg sm:text-2xl group-hover:scale-110 transition"><i class="fas fa-clipboard-check"></i></div>
                 <span class="text-[10px] sm:text-xs text-gray-700 font-medium mt-1">ตรวจสอบสิทธิ</span>
@@ -278,43 +277,23 @@
     <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         <div class="col-span-1 lg:col-span-8 space-y-6">
-            <section id="news" class="bg-white rounded-2xl shadow-sm p-4 sm:p-6 border border-gray-100">
+            <!-- ข่าวประชาสัมพันธ์ -->
+            <section id="news" class="bg-white rounded-2xl shadow-sm p-4 sm:p-6 border border-gray-100 relative">
+                <button onclick="openAdminModal('news')" class="admin-only hidden absolute top-4 right-20 bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1 rounded-md shadow transition">
+                    <i class="fas fa-edit mr-1"></i> แก้ไขข่าว
+                </button>
+
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-[#1e3a8a] text-base sm:text-lg font-bold">ข่าวประชาสัมพันธ์</h3>
                     <a href="#news" class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-medium hover:bg-blue-100 transition">ดูทั้งหมด</a>
                 </div>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    <div class="border border-gray-100 rounded-xl overflow-hidden flex sm:flex-col hover:shadow-md transition bg-white group cursor-pointer">
-                        <div class="w-24 h-24 sm:w-full sm:h-32 flex-shrink-0 overflow-hidden bg-blue-50">
-                            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60" alt="News" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                        </div>
-                        <div class="p-3 flex flex-col justify-center">
-                            <p class="text-[10px] text-gray-400 mb-1"><i class="far fa-calendar-alt mr-1"></i>20 พ.ค. 2567</p>
-                            <p class="text-xs sm:text-sm font-medium text-gray-800 line-clamp-2 group-hover:text-[#2563eb] transition">รับสมัครบุคคลเพื่อคัดเลือกเป็นพนักงานกระทรวงสาธารณสุขทั่วไป</p>
-                        </div>
-                    </div>
-                    <div class="border border-gray-100 rounded-xl overflow-hidden flex sm:flex-col hover:shadow-md transition bg-white group cursor-pointer">
-                        <div class="w-24 h-24 sm:w-full sm:h-32 flex-shrink-0 overflow-hidden bg-teal-50">
-                             <img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60" alt="News" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                        </div>
-                        <div class="p-3 flex flex-col justify-center">
-                            <p class="text-[10px] text-gray-400 mb-1"><i class="far fa-calendar-alt mr-1"></i>15 พ.ค. 2567</p>
-                            <p class="text-xs sm:text-sm font-medium text-gray-800 line-clamp-2 group-hover:text-[#2563eb] transition">เชิญชวนประชาชนกลุ่มเสี่ยงรับบริการฉีดวัคซีนไข้หวัดใหญ่ฟรี</p>
-                        </div>
-                    </div>
-                    <div class="border border-gray-100 rounded-xl overflow-hidden flex sm:flex-col hover:shadow-md transition bg-white group cursor-pointer sm:col-span-2 md:col-span-1">
-                        <div class="w-24 h-24 sm:w-full sm:h-32 flex-shrink-0 overflow-hidden bg-gray-50">
-                             <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60" alt="News" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                        </div>
-                        <div class="p-3 flex flex-col justify-center">
-                            <p class="text-[10px] text-gray-400 mb-1"><i class="far fa-calendar-alt mr-1"></i>10 พ.ค. 2567</p>
-                            <p class="text-xs sm:text-sm font-medium text-gray-800 line-clamp-2 group-hover:text-[#2563eb] transition">กิจกรรมอบรมฟื้นฟูความรู้การช่วยชีวิตขั้นพื้นฐาน (CPR)</p>
-                        </div>
-                    </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="newsContainer">
+                    <!-- Dynamic News -->
                 </div>
             </section>
 
+            <!-- แนะนำหน่วยงาน -->
             <section id="services" class="bg-white rounded-2xl shadow-sm p-4 sm:p-6 border border-gray-100">
                 <h3 class="text-[#1e3a8a] text-base sm:text-lg font-bold mb-4">แนะนำหน่วยงาน</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -347,7 +326,11 @@
         </div>
 
         <div class="col-span-1 lg:col-span-4 space-y-6">
-            <section id="stats" class="bg-blue-50/60 border border-blue-100 rounded-2xl p-4 sm:p-6">
+            <!-- สถิติการให้บริการ -->
+            <section id="stats" class="bg-blue-50/60 border border-blue-100 rounded-2xl p-4 sm:p-6 relative">
+                <button onclick="openAdminModal('stats')" class="admin-only hidden absolute top-4 right-4 bg-amber-500 text-white text-xs px-2.5 py-1 rounded shadow hover:bg-amber-600 transition">
+                    <i class="fas fa-edit"></i> แก้ไขสถิติ
+                </button>
                 <h3 class="text-[#1e3a8a] text-base sm:text-lg font-bold mb-3 flex flex-wrap items-center">
                     <span>สถิติการให้บริการ</span>
                     <span class="text-[10px] sm:text-xs font-normal text-gray-500 sm:ml-2">(ปีงบประมาณ 2568)</span>
@@ -356,48 +339,52 @@
                     <div class="bg-white p-3 rounded-xl flex items-center space-x-2.5 shadow-sm border border-gray-100">
                         <div class="text-[#2563eb] text-lg sm:text-2xl"><i class="fas fa-user-md"></i></div>
                         <div>
-                            <div class="text-sm sm:text-lg font-bold text-[#1e3a8a]">45</div>
+                            <div class="text-sm sm:text-lg font-bold text-[#1e3a8a]" id="display-stat-doctors">45</div>
                             <div class="text-[10px] text-gray-500">แพทย์ (คน)</div>
                         </div>
                     </div>
                     <div class="bg-white p-3 rounded-xl flex items-center space-x-2.5 shadow-sm border border-gray-100">
                         <div class="text-[#2563eb] text-lg sm:text-2xl"><i class="fas fa-user-nurse"></i></div>
                         <div>
-                            <div class="text-sm sm:text-lg font-bold text-[#1e3a8a]">320</div>
+                            <div class="text-sm sm:text-lg font-bold text-[#1e3a8a]" id="display-stat-nurses">320</div>
                             <div class="text-[10px] text-gray-500">พยาบาล (คน)</div>
                         </div>
                     </div>
                     <div class="bg-white p-3 rounded-xl flex items-center space-x-2.5 shadow-sm border border-gray-100">
                         <div class="text-[#2563eb] text-lg sm:text-2xl"><i class="fas fa-bed"></i></div>
                         <div>
-                            <div class="text-sm sm:text-lg font-bold text-[#1e3a8a]">180</div>
+                            <div class="text-sm sm:text-lg font-bold text-[#1e3a8a]" id="display-stat-beds">180</div>
                             <div class="text-[10px] text-gray-500">เตียงผู้ป่วย</div>
                         </div>
                     </div>
                     <div class="bg-white p-3 rounded-xl flex items-center space-x-2.5 shadow-sm border border-gray-100">
                         <div class="text-[#2563eb] text-lg sm:text-2xl"><i class="fas fa-users"></i></div>
                         <div>
-                            <div class="text-sm sm:text-base font-bold text-[#1e3a8a]">200,000+</div>
+                            <div class="text-sm sm:text-base font-bold text-[#1e3a8a]" id="display-stat-patients">200,000+</div>
                             <div class="text-[10px] text-gray-500">ผู้รับบริการ/ปี</div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section id="contact" class="bg-white rounded-2xl shadow-sm p-4 sm:p-6 border border-gray-100">
+            <!-- ติดต่อเรา -->
+            <section id="contact" class="bg-white rounded-2xl shadow-sm p-4 sm:p-6 border border-gray-100 relative">
+                <button onclick="openAdminModal('contact')" class="admin-only hidden absolute top-4 right-4 bg-amber-500 text-white text-xs px-2.5 py-1 rounded shadow hover:bg-amber-600 transition">
+                    <i class="fas fa-edit"></i> แก้ไขติดต่อ
+                </button>
                 <h3 class="text-[#1e3a8a] text-base sm:text-lg font-bold mb-3">ติดต่อเรา</h3>
                 <div class="flex flex-col space-y-3 text-xs sm:text-sm">
                     <a href="https://maps.google.com/?q=โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า" target="_blank" class="flex items-start space-x-2.5 hover:text-blue-600 transition">
                         <i class="fas fa-map-marker-alt text-[#2563eb] mt-0.5 w-4 text-center"></i>
-                        <p class="text-gray-600 leading-normal">194 ม.1 ต.หล่มเก่า อ.หล่มเก่า จ.เพชรบูรณ์ 67120</p>
+                        <p class="text-gray-600 leading-normal" id="display-contact-address">194 ม.1 ต.หล่มเก่า อ.หล่มเก่า จ.เพชรบูรณ์ 67120</p>
                     </a>
                     <a href="tel:056709555" class="flex items-center space-x-2.5 hover:text-blue-600 transition">
                         <i class="fas fa-phone-alt text-[#2563eb] w-4 text-center"></i>
-                        <p class="text-gray-600">056-709-555</p>
+                        <p class="text-gray-600" id="display-contact-phone">056-709-555</p>
                     </a>
-                    <a href="mailto:lomkao@cph.go.th" class="flex items-center space-x-2.5 hover:text-blue-600 transition">
+                    <a href="mailto:rpr.lomkao@gmail.com" class="flex items-center space-x-2.5 hover:text-blue-600 transition">
                         <i class="fas fa-envelope text-[#2563eb] w-4 text-center"></i>
-                        <p class="text-gray-600">lomkao@cph.go.th</p>
+                        <p class="text-gray-600" id="display-contact-email">rpr.lomkao@gmail.com</p>
                     </a>
                     
                     <div class="flex space-x-2.5 pt-1">
@@ -417,6 +404,7 @@
         </div>
     </main>
 
+    <!-- Emergency Floating Button -->
     <div class="fixed right-0 top-1/2 transform -translate-y-1/2 z-30">
         <a href="tel:1669" class="bg-[#dc2626] text-white rounded-l-xl p-2.5 md:p-3.5 flex flex-col items-center shadow-lg hover:bg-red-700 transition duration-200">
             <i class="fas fa-ambulance text-base sm:text-xl md:text-2xl mb-0.5"></i>
@@ -425,19 +413,435 @@
         </a>
     </div>
 
+    <!-- MODAL 1: หน้าต่างกรอกรหัสผ่านเข้าหลังบ้าน -->
+    <div id="loginModal" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4 border border-gray-100">
+            <div class="text-center">
+                <div class="w-12 h-12 bg-blue-100 text-[#1e3a8a] rounded-full flex items-center justify-center mx-auto mb-2 text-xl">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3 class="font-bold text-lg text-[#1e3a8a]">เข้าสู่ระบบผู้ดูแลระบบ</h3>
+                <p class="text-xs text-gray-500 mt-0.5">กรุณากรอกรหัสผ่านเพื่อจัดการหลังบ้าน</p>
+            </div>
+            
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">ชื่อผู้ใช้งาน (Username)</label>
+                    <input type="text" id="loginUser" value="admin" class="w-full border border-gray-300 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">รหัสผ่าน (Password)</label>
+                    <input type="password" id="loginPass" placeholder="รหัสผ่าน (เช่น 1234)" class="w-full border border-gray-300 rounded-lg p-2 text-sm outline-none focus:ring-2 focus:ring-blue-500">
+                    <span class="text-[10px] text-gray-400 mt-1 block">*ค่าเริ่มต้น: admin / 1234</span>
+                </div>
+            </div>
+
+            <div class="flex gap-2 pt-2">
+                <button onclick="closeLoginModal()" class="w-1/2 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-xs font-semibold transition">
+                    ยกเลิก
+                </button>
+                <button onclick="verifyAdminLogin()" class="w-1/2 py-2 bg-[#1e3a8a] hover:bg-blue-900 text-white rounded-lg text-xs font-semibold shadow transition">
+                    เข้าสู่ระบบ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: แผงควบคุมแก้ไขข้อมูลเว็บไซต์ -->
+    <div id="adminModal" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-gray-100">
+            <div class="bg-[#1e3a8a] text-white px-6 py-4 flex justify-between items-center">
+                <h3 class="font-bold text-lg flex items-center gap-2">
+                    <i class="fas fa-sliders-h text-amber-400"></i> ระบบจัดการหลังบ้าน (Admin Panel)
+                </h3>
+                <button onclick="closeAdminModal()" class="text-gray-300 hover:text-white text-xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 flex-1 text-sm text-gray-700">
+                <!-- ส่วนที่ 1: สโลแกนหน้าแรก & ภาพพื้นหลังใหญ่ -->
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
+                    <h4 class="font-bold text-[#1e3a8a] flex items-center gap-1.5 text-base border-b pb-2">
+                        <i class="fas fa-heading"></i> ข้อความต้อนรับ (Hero Section) & รูปภาพใหญ่
+                    </h4>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">ชื่อโรงพยาบาล</label>
+                        <input type="text" id="input-hosp-name" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">สโลแกนหลัก</label>
+                        <input type="text" id="input-hero-subtitle" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">รายละเอียดสั้นๆ</label>
+                        <textarea id="input-hero-desc" rows="2" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+                    </div>
+                    <!-- เพิ่มช่องแก้ไข URL รูปภาพใหญ่ตรงนี้ -->
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1"><i class="fas fa-image mr-1 text-amber-600"></i> URL รูปภาพพื้นหลังใหญ่ (Banner Image)</label>
+                        <input type="text" id="input-hero-bg" placeholder="https://example.com/image.jpg" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                </div>
+
+                <!-- ส่วนที่ 2: จัดการข่าวสาร -->
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
+                    <h4 class="font-bold text-[#1e3a8a] flex items-center gap-1.5 text-base border-b pb-2">
+                        <i class="fas fa-newspaper"></i> ข่าวประชาสัมพันธ์ (3 ข่าวล่าสุด)
+                    </h4>
+                    <div id="adminNewsInputs" class="space-y-4"></div>
+                </div>
+
+                <!-- ส่วนที่ 3: สถิติการให้บริการ -->
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
+                    <h4 class="font-bold text-[#1e3a8a] flex items-center gap-1.5 text-base border-b pb-2">
+                        <i class="fas fa-chart-bar"></i> สถิติการให้บริการ
+                    </h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">จำนวนแพทย์ (คน)</label>
+                            <input type="text" id="input-stat-doctors" class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">จำนวนพยาบาล (คน)</label>
+                            <input type="text" id="input-stat-nurses" class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">เตียงผู้ป่วย</label>
+                            <input type="text" id="input-stat-beds" class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">ผู้รับบริการต่อปี</label>
+                            <input type="text" id="input-stat-patients" class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ส่วนที่ 4: ข้อมูลการติดต่อ -->
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
+                    <h4 class="font-bold text-[#1e3a8a] flex items-center gap-1.5 text-base border-b pb-2">
+                        <i class="fas fa-address-book"></i> ข้อมูลการติดต่อ
+                    </h4>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">ที่อยู่</label>
+                        <input type="text" id="input-contact-address" class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">เบอร์โทรศัพท์</label>
+                            <input type="text" id="input-contact-phone" class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">อีเมล</label>
+                            <input type="text" id="input-contact-email" class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer Controls -->
+            <div class="bg-gray-100 px-6 py-4 border-t border-gray-200 flex justify-between items-center">
+                <button onclick="resetDataToDefault()" class="text-red-600 hover:text-red-800 text-xs font-medium flex items-center gap-1">
+                    <i class="fas fa-undo"></i> รีเซ็ตเป็นค่าเริ่มต้น
+                </button>
+                <div class="flex gap-2">
+                    <button onclick="closeAdminModal()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg text-sm font-medium transition">
+                        ยกเลิก
+                    </button>
+                    <button onclick="saveAdminData()" class="px-5 py-2 bg-[#1e3a8a] hover:bg-blue-900 text-white rounded-lg text-sm font-medium shadow transition flex items-center gap-1.5">
+                        <i class="fas fa-save"></i> บันทึกการแก้ไข
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
     <footer class="bg-[#1e3a8a] text-white py-4 mt-8 text-center md:text-left border-t border-blue-900">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-[10px] sm:text-xs gap-2">
-            <p>© 2026 โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า. All Rights Reserved.</p>
-            <div class="flex space-x-3 text-blue-200">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-[10px] sm:text-xs gap-3">
+            <div class="flex items-center space-x-3">
+                <p>© 2026 โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า. All Rights Reserved.</p>
+            </div>
+            
+            <div class="flex items-center space-x-3 text-blue-200">
                 <a href="#home" class="hover:underline">นโยบายความเป็นส่วนตัว</a>
                 <span>|</span>
                 <a href="#home" class="hover:underline">เงื่อนไขการใช้งาน</a>
+                <span>|</span>
+                <button id="loginToggleBtn" onclick="handleAdminTrigger()" class="bg-blue-900/60 hover:bg-blue-950 text-amber-300 hover:text-amber-200 px-2.5 py-1 rounded transition border border-blue-700/50 flex items-center gap-1.5 font-medium">
+                    <i class="fas fa-lock" id="toggleAdminIcon"></i> 
+                    <span id="toggleAdminText">เข้าสู่ระบบแอดมิน</span>
+                </button>
             </div>
         </div>
     </footer>
 
     <script>
-        // ฟังก์ชันควบคุมการเปิด-ปิดเมนูหลักบนมือถือ
+        const defaultSiteData = {
+            hospName: "โรงพยาบาลสมเด็จพระยุพราชหล่มเก่า",
+            heroSubtitle: "บริการด้วยหัวใจ ห่วงใยดุจญาติมิตร",
+            heroDesc: "พัฒนาคุณภาพบริการ มุ่งสู่มาตรฐาน สร้างสุขภาพดีให้ชุมชน",
+            heroBgImg: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+            stats: {
+                doctors: "45",
+                nurses: "320",
+                beds: "180",
+                patients: "200,000+"
+            },
+            contact: {
+                address: "194 ม.1 ต.หล่มเก่า อ.หล่มเก่า จ.เพชรบูรณ์ 67120",
+                phone: "056-709-555",
+                email: "rpr.lomkao@gmail.com"
+            },
+            news: [
+                {
+                    date: "20 พ.ค. 2567",
+                    title: "รับสมัครบุคคลเพื่อคัดเลือกเป็นพนักงานกระทรวงสาธารณสุขทั่วไป",
+                    img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60"
+                },
+                {
+                    date: "15 พ.ค. 2567",
+                    title: "เชิญชวนประชาชนกลุ่มเสี่ยงรับบริการฉีดวัคซีนไข้หวัดใหญ่ฟรี",
+                    img: "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60"
+                },
+                {
+                    date: "10 พ.ค. 2567",
+                    title: "กิจกรรมอบรมฟื้นฟูความรู้การช่วยชีวิตขั้นพื้นฐาน (CPR)",
+                    img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60"
+                }
+            ]
+        };
+
+        function getSiteData() {
+            const saved = localStorage.getItem('rpr_site_data');
+            return saved ? JSON.parse(saved) : defaultSiteData;
+        }
+
+        function renderSiteData() {
+            const data = getSiteData();
+
+            document.getElementById('display-hosp-name').innerText = data.hospName;
+            document.getElementById('display-hero-title').innerText = data.hospName;
+            document.getElementById('display-hero-subtitle').innerText = data.heroSubtitle;
+            document.getElementById('display-hero-desc').innerText = data.heroDesc;
+
+            // เปลี่ยนภาพพื้นหลังของ Hero Section
+            const heroBgSection = document.getElementById('heroBgSection');
+            const bgUrl = data.heroBgImg || defaultSiteData.heroBgImg;
+            heroBgSection.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.4)), url('${bgUrl}')`;
+
+            document.getElementById('display-stat-doctors').innerText = data.stats.doctors;
+            document.getElementById('display-stat-nurses').innerText = data.stats.nurses;
+            document.getElementById('display-stat-beds').innerText = data.stats.beds;
+            document.getElementById('display-stat-patients').innerText = data.stats.patients;
+
+            document.getElementById('display-contact-address').innerText = data.contact.address;
+            document.getElementById('display-contact-phone').innerText = data.contact.phone;
+            document.getElementById('display-contact-email').innerText = data.contact.email;
+
+            const newsContainer = document.getElementById('newsContainer');
+            newsContainer.innerHTML = '';
+            data.news.forEach((item, index) => {
+                const colSpanClass = index === 2 ? 'sm:col-span-2 md:col-span-1' : '';
+                newsContainer.innerHTML += `
+                    <div class="border border-gray-100 rounded-xl overflow-hidden flex sm:flex-col hover:shadow-md transition bg-white group cursor-pointer relative ${colSpanClass}">
+                        <button onclick="openAdminModal('news')" class="admin-only hidden absolute top-2 right-2 bg-amber-500 text-white p-1 rounded text-[10px] z-10 shadow"><i class="fas fa-edit"></i></button>
+                        <div class="w-24 h-24 sm:w-full sm:h-32 flex-shrink-0 overflow-hidden bg-blue-50">
+                            <img src="${item.img}" alt="News" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div class="p-3 flex flex-col justify-center">
+                            <p class="text-[10px] text-gray-400 mb-1"><i class="far fa-calendar-alt mr-1"></i>${item.date}</p>
+                            <p class="text-xs sm:text-sm font-medium text-gray-800 line-clamp-2 group-hover:text-[#2563eb] transition">${item.title}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            checkRoleAndSetup();
+        }
+
+        function handleAdminTrigger() {
+            const currentRole = localStorage.getItem('userRole');
+            if (currentRole === 'admin') {
+                if (confirm('คุณต้องการออกจากระบบหลังบ้านใช่หรือไม่?')) {
+                    logoutAdmin();
+                }
+            } else {
+                document.getElementById('loginModal').classList.remove('hidden');
+            }
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('loginPass').value = '';
+        }
+
+        function verifyAdminLogin() {
+            const user = document.getElementById('loginUser').value;
+            const pass = document.getElementById('loginPass').value;
+
+            if (user === 'admin' && pass === '1234') {
+                localStorage.setItem('userRole', 'admin');
+                closeLoginModal();
+                alert('เข้าสู่ระบบหลังบ้านสำเร็จ!');
+                checkRoleAndSetup();
+                openAdminModal();
+            } else {
+                alert('ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง! (รหัสผ่านเริ่มต้น: 1234)');
+            }
+        }
+
+        function logoutAdmin() {
+            localStorage.setItem('userRole', 'user');
+            alert("ออกจากระบบหลังบ้านเรียบร้อย");
+            checkRoleAndSetup();
+        }
+
+        function openAdminModal() {
+            const data = getSiteData();
+
+            document.getElementById('input-hosp-name').value = data.hospName;
+            document.getElementById('input-hero-subtitle').value = data.heroSubtitle;
+            document.getElementById('input-hero-desc').value = data.heroDesc;
+            document.getElementById('input-hero-bg').value = data.heroBgImg || defaultSiteData.heroBgImg;
+
+            document.getElementById('input-stat-doctors').value = data.stats.doctors;
+            document.getElementById('input-stat-nurses').value = data.stats.nurses;
+            document.getElementById('input-stat-beds').value = data.stats.beds;
+            document.getElementById('input-stat-patients').value = data.stats.patients;
+
+            document.getElementById('input-contact-address').value = data.contact.address;
+            document.getElementById('input-contact-phone').value = data.contact.phone;
+            document.getElementById('input-contact-email').value = data.contact.email;
+
+            const newsInputsContainer = document.getElementById('adminNewsInputs');
+            newsInputsContainer.innerHTML = '';
+            data.news.forEach((newsItem, idx) => {
+                newsInputsContainer.innerHTML += `
+                    <div class="p-3 bg-white rounded-lg border border-gray-200 space-y-2">
+                        <div class="font-semibold text-xs text-amber-600">ข่าวที่ ${idx + 1}</div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <input type="text" id="news-date-${idx}" value="${newsItem.date}" placeholder="วันที่" class="border rounded p-1.5 text-xs">
+                            <input type="text" id="news-img-${idx}" value="${newsItem.img}" placeholder="URL รูปภาพ" class="col-span-2 border rounded p-1.5 text-xs">
+                        </div>
+                        <input type="text" id="news-title-${idx}" value="${newsItem.title}" placeholder="หัวข้อข่าว" class="w-full border rounded p-1.5 text-xs">
+                    </div>
+                `;
+            });
+
+            document.getElementById('adminModal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        function saveAdminData() {
+            const updatedData = {
+                hospName: document.getElementById('input-hosp-name').value,
+                heroSubtitle: document.getElementById('input-hero-subtitle').value,
+                heroDesc: document.getElementById('input-hero-desc').value,
+                heroBgImg: document.getElementById('input-hero-bg').value,
+                stats: {
+                    doctors: document.getElementById('input-stat-doctors').value,
+                    nurses: document.getElementById('input-stat-nurses').value,
+                    beds: document.getElementById('input-stat-beds').value,
+                    patients: document.getElementById('input-stat-patients').value
+                },
+                contact: {
+                    address: document.getElementById('input-contact-address').value,
+                    phone: document.getElementById('input-contact-phone').value,
+                    email: document.getElementById('input-contact-email').value
+                },
+                news: [
+                    {
+                        date: document.getElementById('news-date-0').value,
+                        img: document.getElementById('news-img-0').value,
+                        title: document.getElementById('news-title-0').value
+                    },
+                    {
+                        date: document.getElementById('news-date-1').value,
+                        img: document.getElementById('news-img-1').value,
+                        title: document.getElementById('news-title-1').value
+                    },
+                    {
+                        date: document.getElementById('news-date-2').value,
+                        img: document.getElementById('news-img-2').value,
+                        title: document.getElementById('news-title-2').value
+                    }
+                ]
+            };
+
+            localStorage.setItem('rpr_site_data', JSON.stringify(updatedData));
+            alert('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!');
+            closeAdminModal();
+            renderSiteData();
+        }
+
+        function resetDataToDefault() {
+            if (confirm('คุณต้องการรีเซ็ตข้อมูลทั้งหมดกลับเป็นค่าเริ่มต้นใช่หรือไม่?')) {
+                localStorage.removeItem('rpr_site_data');
+                renderSiteData();
+                closeAdminModal();
+                alert('รีเซ็ตข้อมูลกลับเป็นค่าเริ่มต้นเรียบร้อยแล้ว');
+            }
+        }
+
+        function changeTheme(mode) {
+            const themeSelector = document.getElementById('themeSelector');
+            if (mode === 'bw') {
+                document.body.classList.add('bw-mode');
+                localStorage.setItem('theme', 'bw');
+            } else {
+                document.body.classList.remove('bw-mode');
+                localStorage.setItem('theme', 'color');
+            }
+            if (themeSelector) themeSelector.value = mode;
+        }
+
+        function applySavedTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeSelector = document.getElementById('themeSelector');
+            
+            if (savedTheme === 'bw') {
+                document.body.classList.add('bw-mode');
+                if (themeSelector) themeSelector.value = 'bw';
+            } else {
+                document.body.classList.remove('bw-mode');
+                if (themeSelector) themeSelector.value = 'color';
+            }
+        }
+
+        function checkRoleAndSetup() {
+            const adminBadge = document.getElementById('adminBadge');
+            const toggleAdminIcon = document.getElementById('toggleAdminIcon');
+            const toggleAdminText = document.getElementById('toggleAdminText');
+            const adminElements = document.querySelectorAll('.admin-only');
+            const userRole = localStorage.getItem('userRole'); 
+
+            if (userRole === 'admin') {
+                if (adminBadge) adminBadge.classList.remove('hidden');
+                
+                toggleAdminIcon.className = "fas fa-unlock text-emerald-400";
+                toggleAdminText.innerText = "จัดการหลังบ้าน / ออกจากระบบ";
+
+                adminElements.forEach(el => el.classList.remove('hidden'));
+            } else {
+                if (adminBadge) adminBadge.classList.add('hidden');
+                
+                toggleAdminIcon.className = "fas fa-lock";
+                toggleAdminText.innerText = "เข้าสู่ระบบแอดมิน";
+                adminElements.forEach(el => el.classList.add('hidden'));
+            }
+
+            applySavedTheme();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSiteData();
+            applySavedTheme();
+        });
+
         function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
             const backdrop = document.getElementById('menu-backdrop');
@@ -460,20 +864,17 @@
             }
         }
 
-        // ฟังก์ชันใหม่: สำหรับเปิด-ปิดเมนูย่อย (Accordion) บนมือถือ
         function toggleSubmenu(submenuId, iconId) {
             const submenu = document.getElementById(submenuId);
             const icon = document.getElementById(iconId);
             
             if (submenu.classList.contains('hidden')) {
-                // กางออก
                 submenu.classList.remove('hidden');
                 submenu.classList.add('flex');
                 icon.classList.add('rotate-180');
                 icon.classList.remove('text-gray-400');
                 icon.classList.add('text-[#1e3a8a]');
             } else {
-                // หุบเข้า
                 submenu.classList.add('hidden');
                 submenu.classList.remove('flex');
                 icon.classList.remove('rotate-180');
